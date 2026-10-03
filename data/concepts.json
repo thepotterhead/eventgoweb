@@ -1,0 +1,42 @@
+{
+  "motors": {
+    "concept_id": "motors",
+    "name": "Motors & Movement",
+    "category": "Mechanical & Electrical",
+    "description": "How electrical energy is transformed into rotational or linear mechanical work using DC/BO motors.",
+    "related_characters": ["quacky", "tiko"],
+    "related_products": ["quacky", "tiko"]
+  },
+  "light": {
+    "concept_id": "light",
+    "name": "Light & LEDs",
+    "category": "Optics & Electronics",
+    "description": "How light functions in everyday environments and how LEDs emit light controlled by electronic circuits.",
+    "related_characters": ["petalo", "tolly"],
+    "related_products": ["petalo", "tolly"]
+  },
+  "circuits": {
+    "concept_id": "circuits",
+    "name": "Electrical Circuits & Power",
+    "category": "Electronics",
+    "description": "Closed path electrical loops connecting batteries, switches, motors, LEDs, and timers.",
+    "related_characters": ["quacky", "tiko", "tolly"],
+    "related_products": ["quacky", "tiko", "tolly"]
+  },
+  "sequencing": {
+    "concept_id": "sequencing",
+    "name": "Electronic Sequencing & Timers",
+    "category": "Control Systems",
+    "description": "Timing signals and logic controlling red-yellow-green sequences and automated state changes.",
+    "related_characters": ["tolly"],
+    "related_products": ["tolly"]
+  },
+  "mechanical_motion": {
+    "concept_id": "mechanical_motion",
+    "name": "Thread-based Mechanical Motion",
+    "category": "Mechanisms",
+    "description": "Converting rotational motor movement into pull-and-release thread tension for tail wagging.",
+    "related_characters": ["tiko"],
+    "related_products": ["tiko"]
+  }
+}

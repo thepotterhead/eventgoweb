@@ -1,0 +1,27 @@
+{
+  "id": "tiko",
+  "name": "Tiko",
+  "status": "mapped",
+  "avatar": "🦂",
+  "tagline": "Scorpio Thread Bot",
+  "official_context": "A scorpio bot whose motor creates up-and-down thread-based tail movement.",
+  "product_id": "tiko",
+  "verified_facts": [
+    "Tiko is a scorpio bot whose motor creates up-and-down thread-based tail movement.",
+    "Tiko uses a motor powered by a simple electrical circuit.",
+    "Tiko's tail movement relies on thread pulling and releasing mechanical action.",
+    "Troubleshooting Tiko involves checking battery connections, motor wire contact, and thread tension."
+  ],
+  "stem_concepts": [
+    "motors",
+    "simple circuits",
+    "mechanical motion",
+    "energy-to-motion relationship",
+    "troubleshooting"
+  ],
+  "learning_materials": {
+    "beginner": "Tiko's motor pulls a thread to make its scorpio tail move up and down!",
+    "intermediate": "When the circuit closes, electrical energy turns the motor axle. The attached thread gets pulled and released to create mechanical motion.",
+    "advanced": "Troubleshooting thread-based mechanical systems requires examining friction, motor torque, electrical conductivity across battery contacts, and mechanical tension."
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "FZ-HACK-001": {
+    "customer_id": "FZ-HACK-001",
+    "customer_name": "Spark Learner (Single/Dual Product)",
+    "purchased_products": ["petalo", "quacky"]
+  },
+  "FZ-HACK-002": {
+    "customer_id": "FZ-HACK-002",
+    "customer_name": "Mechanic Explorer",
+    "purchased_products": ["tiko"]
+  },
+  "FZ-HACK-003": {
+    "customer_id": "FZ-HACK-003",
+    "customer_name": "Circuits & Light Enthusiast",
+    "purchased_products": ["tolly", "petalo"]
+  },
+  "FZ-HACK-004": {
+    "customer_id": "FZ-HACK-004",
+    "customer_name": "Full STEM Robotics Bundle Holder",
+    "purchased_products": ["quacky", "tiko", "tolly"]
+  },
+  "FZ-HACK-005": {
+    "customer_id": "FZ-HACK-005",
+    "customer_name": "Guest / No Access Account",
+    "purchased_products": []
+  }
+}

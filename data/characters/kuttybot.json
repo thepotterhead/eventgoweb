@@ -1,0 +1,21 @@
+{
+  "id": "kuttybot",
+  "name": "Kuttybot",
+  "status": "behaviour_only",
+  "avatar": "🤖",
+  "tagline": "Friendly Talking Robot",
+  "official_context": "A friendly talking robot that speaks and interacts.",
+  "product_id": null,
+  "verified_facts": [
+    "Kuttybot is a friendly talking robot that speaks and interacts."
+  ],
+  "stem_concepts": [
+    "speech interaction",
+    "audio response communication"
+  ],
+  "learning_materials": {
+    "beginner": "Kuttybot is a talking robot friend who speaks with you!",
+    "intermediate": "Kuttybot uses audio interaction signals to communicate.",
+    "advanced": "Deeper STEM concept mapping for Kuttybot is pending organizer-supplied material."
+  }
+}

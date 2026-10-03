@@ -1,0 +1,21 @@
+{
+  "id": "mimo",
+  "name": "Mimo",
+  "status": "behaviour_only",
+  "avatar": "🐶",
+  "tagline": "Paper Pet Dog",
+  "official_context": "A paper pet dog that comes to life through simple movement and playful interaction.",
+  "product_id": null,
+  "verified_facts": [
+    "Mimo is a paper pet dog that comes to life through simple movement and playful interaction."
+  ],
+  "stem_concepts": [
+    "simple movement",
+    "playful interactive mechanics"
+  ],
+  "learning_materials": {
+    "beginner": "Mimo is a fun paper pet dog that loves to move and play!",
+    "intermediate": "Mimo uses simple paper mechanics and movement to interact playfully.",
+    "advanced": "Deeper STEM concept mapping for Mimo is pending organizer-supplied material."
+  }
+}

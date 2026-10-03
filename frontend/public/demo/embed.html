@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Funobotz Store - Embedded Widget Demonstration</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #090d16;
+      color: #f8fafc;
+      padding: 40px;
+    }
+    .store-header {
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .product-card {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .badge {
+      display: inline-block;
+      background: #10b981;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 99px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="store-header">
+    <span class="badge">FUNOBOTZ OFFICIAL STORE DEMO</span>
+    <h1 style="margin-top: 10px;">Funobotz Paper Robotics Catalog</h1>
+    <p style="color: #94a3b8;">Integration Demonstration Page: The chatbot widget is embedded in the bottom-right corner of this website.</p>
+  </div>
+
+  <div class="product-grid">
+    <div class="product-card">
+      <span style="font-size: 40px;">🌸</span>
+      <h3>Petalo Discovery Kit</h3>
+      <p style="font-size: 13px; color: #94a3b8;">Light-up discovery friend used with challenge cards and connected subworlds.</p>
+    </div>
+
+    <div class="product-card">
+      <span style="font-size: 40px;">🦆</span>
+      <h3>Quacky Duck Bot Kit</h3>
+      <p style="font-size: 13px; color: #94a3b8;">Movable duck bot powered by a BO motor through a simple circuit.</p>
+    </div>
+
+    <div class="product-card">
+      <span style="font-size: 40px;">🚥</span>
+      <h3>Tolly Traffic Light Sequencer</h3>
+      <p style="font-size: 13px; color: #94a3b8;">Timer circuit with red-yellow-green LED sequence.</p>
+    </div>
+
+    <div class="product-card">
+      <span style="font-size: 40px;">🦂</span>
+      <h3>Tiko Scorpio Bot Kit</h3>
+      <p style="font-size: 13px; color: #94a3b8;">Motorized scorpio bot creating up-and-down thread-based tail movement.</p>
+    </div>
+  </div>
+
+  <!-- EMBEDDABLE WIDGET SCRIPT -->
+  <script src="/widget.js"></script>
+  
+  <funobotz-tutor 
+    data-api-url="http://127.0.0.1:8000/api"
+    data-customer-id="FZ-HACK-004"
+    data-learner-age="11"
+    data-character="tiko">
+  </funobotz-tutor>
+
+</body>
+</html>

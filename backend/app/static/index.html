@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Funobotz - Minimal STEM Learning Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border-light: #e2e8f0;
+      --border-hover: #cbd5e1;
+      --accent-primary: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-light: #eff6ff;
+      --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      padding-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    h1, h2, h3, h4 { font-family: var(--font-heading); color: var(--text-primary); }
+
+    .glass-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+      padding: 1.25rem;
+    }
+
+    .gradient-text {
+      color: var(--text-primary);
+      font-weight: 800;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.85rem 2rem;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-light);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge-purple, .badge-cyan, .badge-blue { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+    .badge-emerald { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+    .badge-amber { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+    .badge-rose { background: #fff1f2; color: #be123c; border: 1px solid #fecdd3; }
+
+    /* Layout */
+    .app-container {
+      max-width: 1350px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 1024px) {
+      .main-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary { background: #0f172a; color: #ffffff; }
+    .btn-primary:hover { background: #1e293b; }
+    .btn-secondary { background: #ffffff; color: var(--text-primary); border: 1px solid var(--border-light); }
+    .btn-secondary:hover { background: #f8fafc; border-color: var(--border-hover); }
+    .btn-pill { border-radius: 9999px; padding: 0.3rem 0.8rem; font-size: 0.75rem; }
+
+    /* Cards */
+    .age-card {
+      padding: 0.75rem 0.9rem;
+      border-radius: 10px;
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .age-card:hover {
+      border-color: var(--accent-primary);
+      background: #f8fafc;
+    }
+    .age-card.active {
+      border-color: var(--accent-primary);
+      background: #eff6ff;
+    }
+
+    .char-card {
+      padding: 0.65rem 0.4rem;
+      border-radius: 10px;
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+    .char-card:hover {
+      border-color: var(--accent-primary);
+      background: #f8fafc;
+    }
+    .char-card.active {
+      border-color: var(--accent-primary);
+      background: #eff6ff;
+    }
+
+    /* Chat Container */
+    .chat-box {
+      display: flex;
+      flex-direction: column;
+      height: 600px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+    }
+
+    .chat-header {
+      padding: 0.85rem 1.25rem;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 1.25rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      background: #fafafa;
+    }
+
+    .chat-bubble {
+      max-width: 80%;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      line-height: 1.5;
+      font-size: 0.9rem;
+    }
+
+    .chat-bubble.user { align-self: flex-end; background: #2563eb; color: #ffffff; border-bottom-right-radius: 2px; }
+    .chat-bubble.bot { align-self: flex-start; background: #ffffff; border: 1px solid var(--border-light); color: var(--text-primary); border-bottom-left-radius: 2px; }
+
+    .chat-input-area {
+      padding: 0.75rem 1.25rem;
+      background: #ffffff;
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      gap: 0.65rem;
+    }
+
+    .chat-input {
+      flex: 1;
+      background: #f8fafc;
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 0.6rem 0.9rem;
+      color: var(--text-primary);
+      font-size: 0.88rem;
+      outline: none;
+    }
+    .chat-input:focus {
+      border-color: var(--accent-primary);
+      background: #ffffff;
+    }
+
+    /* Scenario Panel */
+    .demo-banner {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .scenario-btn {
+      padding: 0.5rem 0.65rem;
+      font-size: 0.76rem;
+      text-align: left;
+      border-radius: 8px;
+      background: #f8fafc;
+      border: 1px solid var(--border-light);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .scenario-btn:hover { background: #2563eb; border-color: #2563eb; color: #ffffff; }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <span style="font-size:1.4rem;">🤖</span>
+      <span class="gradient-text">FUNOBOTZ</span>
+      <span style="font-size:0.82rem; color:#64748b; font-weight:500;">STEM Studio</span>
+    </div>
+
+    <div class="nav-controls">
+      <button class="btn btn-secondary btn-pill" style="font-weight:700; border-color:#2563eb; color:#2563eb; background:#eff6ff;" onclick="openLoginModal()">
+        🔑 Learner Login
+      </button>
+      <button class="btn btn-secondary btn-pill" id="lang-toggle-btn" style="font-weight:600;" onclick="toggleVoiceLang()">
+        🌐 Voice: ENG 🇺🇸
+      </button>
+      <button class="btn btn-secondary btn-pill" onclick="openPaperAssemblyInspector()">
+        📐 3D Fold Blueprint
+      </button>
+      <button class="btn btn-primary btn-pill" style="background:#2563eb; color:#fff;" onclick="start3MinJudgeWalkthrough()">
+        🎬 3-Min Walkthrough
+      </button>
+      <button class="btn btn-secondary btn-pill" id="tts-toggle-btn" onclick="toggleVoiceOutput()">
+        🔊 Voice: ON
+      </button>
+      <input type="password" id="gemini-key-input" class="chat-input" style="width:140px; font-size:0.75rem; padding:0.3rem 0.65rem;" placeholder="🔑 Gemini Key..." title="Paste free Gemini API key for live Gemini AI mode" />
+      <span id="badge-user" class="badge badge-blue">Learner (Age 8)</span>
+      <span id="badge-level" class="badge badge-amber">Level 0</span>
+      <button class="btn btn-secondary" onclick="toggleWidgetView()">💻 Widget</button>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <!-- Interactive Learning Scenarios Banner -->
+    <div class="demo-banner">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+        <div>
+          <h3 style="color:#0f172a; font-size:1rem; display:flex; align-items:center; gap:0.4rem; font-weight:700;">
+            ⚡ INTERACTIVE LEARNING SCENARIO PRESETS
+          </h3>
+          <p style="font-size:0.78rem; color:#64748b;">Click any scenario button below to test specific learning scenarios.</p>
+        </div>
+        <div style="display:flex; gap:0.5rem;">
+          <button class="btn btn-primary btn-pill" style="font-size:0.75rem; background:#0f172a;" onclick="start3MinJudgeWalkthrough()">
+            🎬 Start 3-Min Walkthrough
+          </button>
+          <span class="badge badge-amber">8 Scenarios Ready</span>
+        </div>
+      </div>
+
+      <div class="scenario-grid">
+        <button class="scenario-btn" onclick="runScenario(1)">
+          <strong>1. Mechanical Motion & Motors</strong><br><span style="color:#64748b;">Tiko tail thread movement & motor circuit</span>
+        </button>
+        <button class="scenario-btn" onclick="runScenario(2)">
+          <strong>2. Light & Discovery Shifting</strong><br><span style="color:#64748b;">Topic shift from motors to Petalo light</span>
+        </button>
+        <button class="scenario-btn" onclick="runScenario(3)">
+          <strong>3. Product Access & Safety</strong><br><span style="color:#64748b;">Managing product permissions safely</span>
+        </button>
+        <button class="scenario-btn" onclick="runScenario(4)">
+          <strong>4. Ambiguity & Clarification</strong><br><span style="color:#64748b;">Resolving "Why does it move?" questions</span>
+        </button>
+        <button class="scenario-btn" onclick="runScenario(5)">
+          <strong>5. Grounding & Fact Refusal</strong><br><span style="color:#64748b;">Refusing to invent unapproved facts</span>
+        </button>
+        <button class="scenario-btn" onclick="runScenario(6)">
+          <strong>6. Advanced Concept Escalation</strong><br><span style="color:#64748b;">Deepening depth when learner knows basics</span>
+        </button>
+        <button class="scenario-btn" onclick="runScenario(7)">
+          <strong>7. Roster Character Expansion</strong><br><span style="color:#64748b;">Routing unreleased characters (Cuby)</span>
+        </button>
+        <button class="scenario-btn" onclick="runScenario(8)">
+          <strong>8. Multi-Product Circuits</strong><br><span style="color:#64748b;">Quacky, Tiko & Tolly circuit integration</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="main-grid" id="app-main-grid">
+      <!-- Left Column: Learner Age & Profile Customization + Roster -->
+      <div style="display:flex; flex-direction:column; gap:1.25rem;">
+
+        <!-- Learner Age & Synthetic Profile Auto-Personalization -->
+        <div class="glass-panel">
+          <h3 style="font-size:0.95rem; margin-bottom:0.35rem; color:#0f172a; display:flex; align-items:center; gap:0.4rem; font-weight:700;">
+            🎈 Learner Age Personalization
+          </h3>
+          <p style="font-size:0.78rem; color:#64748b; margin-bottom:0.85rem;">
+            Select age to automatically personalize starting knowledge and companion focus:
+          </p>
+
+          <div style="display:flex; flex-direction:column; gap:0.6rem;" id="age-selector-list">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- 12 Characters -->
+        <div class="glass-panel">
+          <h3 style="font-size:0.95rem; margin-bottom:0.75rem; color:#0f172a; display:flex; align-items:center; gap:0.4rem; font-weight:700;">
+            🤖 Official Character Roster (12)
+          </h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(95px, 1fr)); gap:0.5rem; max-height:280px; overflow-y:auto;" id="char-grid">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Interactive Animated STEM Circuit Blueprint Visualizer -->
+        <div class="glass-panel" id="circuit-visualizer-panel">
+          <div id="circuit-container">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Interactive Paper Servo & Linkage Lab -->
+        <div class="glass-panel" id="servo-linkage-panel">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- Interactive STEM Quests & Badges -->
+        <div class="glass-panel" id="quests-container">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div style="display:flex; flex-direction:column; gap:1.25rem;">
+        <!-- Chat Box -->
+        <div class="glass-panel chat-box">
+          <div class="chat-header">
+            <div style="display:flex; align-items:center; gap:0.75rem;">
+              <span id="companion-avatar" style="font-size:1.8rem;">🦆</span>
+              <div>
+                <h3 id="companion-name" style="font-size:1.05rem; margin:0; font-weight:700;">Quacky</h3>
+                <span id="companion-topic" class="badge badge-blue" style="font-size:0.68rem;">Topic: motors</span>
+              </div>
+            </div>
+            <span id="companion-diff" class="badge badge-amber">Beginner (Level 0)</span>
+          </div>
+
+          <div class="chat-messages" id="chat-messages">
+            <!-- Messages rendered here -->
+          </div>
+
+          <!-- Test quick actions bar -->
+          <div style="padding:0.5rem 1rem; background:#ffffff; border-top:1px solid #e2e8f0; display:flex; gap:0.4rem; flex-wrap:wrap;">
+            <span style="font-size:0.72rem; color:#64748b; align-self:center; font-weight:600;">Quick Test:</span>
+            <button class="btn btn-secondary btn-pill" onclick="sendQuick('I already know this.')">⚡ "I already know this"</button>
+            <button class="btn btn-secondary btn-pill" onclick="sendQuick('Actually I want to learn about light with Petalo!')">💡 "Switch to Light"</button>
+            <button class="btn btn-secondary btn-pill" onclick="sendQuick('Why does it move?')">❓ "Why does it move?"</button>
+            <button class="btn btn-secondary btn-pill" onclick="sendQuick('What is Tiko\'s favorite food?')">🚫 "Favorite food?"</button>
+          </div>
+
+          <form class="chat-input-area" onsubmit="handleSend(event)">
+            <button type="button" class="btn btn-secondary" id="mic-btn" style="padding:0.5rem 0.75rem;" onclick="startSpeechRecognition()" title="Speak your question using microphone (Hindi/English)">
+              🎤 Speak
+            </button>
+            <input type="text" id="chat-input-text" class="chat-input" placeholder="Ask a STEM question (Type or Speak)..." />
+            <button type="submit" class="btn btn-primary">Send</button>
+          </form>
+        </div>
+
+        <!-- Mini Challenge -->
+        <div class="glass-panel">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem;">
+            <h3 style="font-size:0.95rem; color:#0f172a; font-weight:700;">🏆 Mini Challenge / Understanding Check</h3>
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span id="xp-badge" class="badge badge-amber">Score: 0 XP</span>
+              <button class="btn btn-primary btn-pill" style="font-size:0.72rem; padding:0.25rem 0.65rem; background:#2563eb; color:#fff;" onclick="openCertificateModal()">📜 Claim Certificate</button>
+            </div>
+          </div>
+          <div id="check-box" style="background:#f8fafc; border:1px solid #e2e8f0; padding:0.85rem; border-radius:10px;">
+            <p id="check-question" style="font-weight:600; font-size:0.88rem; margin-bottom:0.6rem; color:#0f172a;"></p>
+            <div id="check-options" style="display:flex; flex-direction:column; gap:0.4rem;"></div>
+            <div id="check-feedback" style="display:none; margin-top:0.6rem; padding:0.5rem; border-radius:6px; font-size:0.8rem;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = '/api';
+    let sessionId = 'sess_' + Math.random().toString(36).substring(2, 9);
+    let currentProfile = {
+      learner_id: 'L-01',
+      name: 'Spark Learner',
+      age: 8,
+      interest: 'light',
+      starting_knowledge: 'Beginner',
+      current_level: 0,
+      current_topic: 'light',
+      active_character: 'petalo',
+      customer_id: 'FZ-HACK-001'
+    };
+    let allCharacters = [];
+    let currentScore = 0;
+    let latestCorrectOption = 0;
+
+    const SYNTHETIC_AGE_PROFILES = {
+      8: { pid: 'L-01', name: 'Spark Learner (Age 8)', char: 'petalo', level: 'Beginner (Level 0)', topic: 'light', desc: 'Interested in light and colorful builds; first-time STEM learner.' },
+      9: { pid: 'L-03', name: 'Story Discoverer (Age 9)', char: 'quacky', level: 'Beginner (Level 0)', topic: 'stories', desc: 'Enjoys stories and characters; needs simple explanations.' },
+      10: { pid: 'L-05', name: 'Open Inquirer (Age 10)', char: 'quacky', level: 'Beginner (Level 0)', topic: 'motors', desc: 'No stated STEM preference; explores by asking open-ended questions.' },
+      11: { pid: 'L-02', name: 'Motion Explorer (Age 11)', char: 'tiko', level: 'Intermediate (Level 1)', topic: 'motors', desc: 'Interested in movement and machines; understands basic battery connections.' },
+      12: { pid: 'L-04', name: 'Circuit Master (Age 12+)', char: 'tolly', level: 'Advanced (Level 2)', topic: 'circuits', desc: 'Interested in electronics; understands simple circuits, wants deeper explanation.' }
+    };
+
+    // --- WEB AUDIO API & CONFETTI INTERACTIVE ENGINE ---
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+
+    function getAudioContext() {
+      if (!audioCtx) audioCtx = new AudioContext();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }
+
+    function playClickSFX() {
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.05);
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.05);
+      } catch (e) {}
+    }
+
+    function playSuccessSFX() {
+      try {
+        const ctx = getAudioContext();
+        const now = ctx.currentTime;
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + i * 0.08);
+          gain.gain.setValueAtTime(0.18, now + i * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.25);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + i * 0.08);
+          osc.stop(now + i * 0.08 + 0.25);
+        });
+      } catch (e) {}
+    }
+
+    function playServoSFX(angle) {
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(120 + (angle % 30) * 4, ctx.currentTime);
+        gain.gain.setValueAtTime(0.03, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.08);
+      } catch (e) {}
+    }
+
+    function triggerConfetti() {
+      playSuccessSFX();
+      const canvas = document.createElement('canvas');
+      canvas.style.position = 'fixed';
+      canvas.style.top = '0';
+      canvas.style.left = '0';
+      canvas.style.width = '100vw';
+      canvas.style.height = '100vh';
+      canvas.style.pointerEvents = 'none';
+      canvas.style.zIndex = '99999';
+      document.body.appendChild(canvas);
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const ctx = canvas.getContext('2d');
+
+      const particles = [];
+      const colors = ['#2563eb', '#3b82f6', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6'];
+      for (let i = 0; i < 65; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height / 3,
+          vx: (Math.random() - 0.5) * 14,
+          vy: Math.random() * -12 - 4,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1,
+          rotation: Math.random() * 360
+        });
+      }
+
+      let frame = 0;
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.4;
+          p.alpha -= 0.015;
+          p.rotation += 5;
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, p.alpha);
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+          ctx.restore();
+        });
+
+        frame++;
+        if (frame < 85) {
+          requestAnimationFrame(animate);
+        } else {
+          canvas.remove();
+        }
+      }
+      animate();
+    }
+
+    // --- INTERACTIVE PAPER SERVO & LINKAGE SIMULATOR ---
+    let currentServoAngle = 90;
+    let currentPaperGSM = 200;
+    let servoSweepInterval = null;
+
+    function renderServoLinkageLab() {
+      const container = document.getElementById('servo-linkage-panel');
+      if (!container) return;
+
+      const torque_ncm = (currentServoAngle / 90 * 2.5).toFixed(1);
+      const flex_load = currentPaperGSM > 220 ? 'Stiff (Heavy Load)' : currentPaperGSM < 120 ? 'Flexible (Buckle Risk)' : 'Optimal Flex';
+      const loadColor = currentPaperGSM > 220 ? '#d97706' : currentPaperGSM < 120 ? '#dc2626' : '#059669';
+
+      const angleRad = (currentServoAngle - 90) * (Math.PI / 180);
+      const armLength = 50;
+      const pinX = Math.round(150 + Math.sin(angleRad) * armLength);
+      const pinY = Math.round(70 - Math.cos(angleRad) * armLength);
+
+      container.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+          <h3 style="font-size:0.92rem; color:#0f172a; font-weight:700; display:flex; align-items:center; gap:0.35rem;">
+            ⚙️ Interactive Servo Linkage Lab
+          </h3>
+          <span class="badge badge-purple" style="font-size:0.68rem;">Live Physics</span>
+        </div>
+
+        <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:10px; padding:0.6rem; text-align:center; margin-bottom:0.75rem;">
+          <svg width="100%" height="110" viewBox="0 0 300 110">
+            <rect x="125" y="60" width="50" height="35" rx="4" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+            <text x="150" y="82" fill="#ffffff" font-size="9" font-weight="bold" text-anchor="middle">SERVO MOTOR</text>
+            <circle cx="150" cy="75" r="8" fill="#cbd5e1" stroke="#475569" stroke-width="2"/>
+            <line x1="150" y1="75" x2="${pinX}" y2="${pinY}" stroke="#2563eb" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="${pinX}" cy="${pinY}" r="5" fill="#f59e0b" stroke="#b45309" stroke-width="1.5"/>
+            <path d="M ${pinX} ${pinY} Q ${pinX + 25} ${pinY - 15} ${pinX + 45} ${pinY - 5}" fill="none" stroke="#64748b" stroke-width="3" stroke-dasharray="3"/>
+            <text x="${Math.min(pinX + 45, 230)}" y="${pinY}" fill="#0f172a" font-size="10" font-weight="bold">📄 Paper Flap</text>
+            <path d="M 110 75 A 40 40 0 0 1 190 75" fill="none" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="2"/>
+            <text x="150" y="22" fill="#2563eb" font-size="11" font-weight="bold" text-anchor="middle">
+              Angle: ${currentServoAngle}° | Torque: ${torque_ncm} N·cm
+            </text>
+          </svg>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:0.55rem; font-size:0.78rem;">
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:0.25rem;">
+              <span style="color:#475569; font-weight:600;">Servo Horn Rotation Angle:</span>
+              <strong style="color:#2563eb;">${currentServoAngle}°</strong>
+            </div>
+            <input type="range" min="0" max="180" step="5" value="${currentServoAngle}" style="width:100%; accent-color:#2563eb; cursor:pointer;" oninput="updateServoAngle(this.value)" />
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
+            <div>
+              <label style="color:#475569; font-weight:600; display:block; margin-bottom:0.2rem;">Paper Stock GSM:</label>
+              <select class="chat-input" style="width:100%; font-size:0.75rem; padding:0.3rem;" onchange="updatePaperGSM(this.value)">
+                <option value="90" ${currentPaperGSM === 90 ? 'selected' : ''}>90 GSM (Thin)</option>
+                <option value="200" ${currentPaperGSM === 200 ? 'selected' : ''}>200 GSM (Medium)</option>
+                <option value="300" ${currentPaperGSM === 300 ? 'selected' : ''}>300 GSM (Heavy)</option>
+              </select>
+            </div>
+            <div>
+              <label style="color:#475569; font-weight:600; display:block; margin-bottom:0.2rem;">Flex Load Status:</label>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:0.35rem 0.5rem; border-radius:6px; font-weight:700; color:${loadColor}; text-align:center; font-size:0.72rem;">
+                ${flex_load}
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:0.4rem; margin-top:0.25rem;">
+            <button class="btn btn-secondary btn-pill" style="flex:1; font-size:0.72rem;" onclick="toggleAutoSweep()">
+              ${servoSweepInterval ? '⏹️ Stop Sweep' : '▶️ Sweep 0°–180°'}
+            </button>
+            <button class="btn btn-primary btn-pill" style="flex:1.2; font-size:0.72rem; background:#2563eb;" onclick="askBotAboutServoConfig()">
+              💬 Ask Bot This Config
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function updateServoAngle(val) {
+      currentServoAngle = parseInt(val);
+      playServoSFX(currentServoAngle);
+      renderServoLinkageLab();
+    }
+
+    function updatePaperGSM(val) {
+      currentPaperGSM = parseInt(val);
+      playClickSFX();
+      renderServoLinkageLab();
+    }
+
+    function toggleAutoSweep() {
+      playClickSFX();
+      if (servoSweepInterval) {
+        clearInterval(servoSweepInterval);
+        servoSweepInterval = null;
+        renderServoLinkageLab();
+        return;
+      }
+
+      let sweepDir = 1;
+      servoSweepInterval = setInterval(() => {
+        currentServoAngle += sweepDir * 10;
+        if (currentServoAngle >= 180) { currentServoAngle = 180; sweepDir = -1; }
+        if (currentServoAngle <= 0) { currentServoAngle = 0; sweepDir = 1; }
+        playServoSFX(currentServoAngle);
+        renderServoLinkageLab();
+      }, 120);
+    }
+
+    function askBotAboutServoConfig() {
+      playClickSFX();
+      const msg = `What happens to my paper robot when I set the servo angle to ${currentServoAngle}° using ${currentPaperGSM} GSM paper?`;
+      sendQuick(msg);
+    }
+
+    // --- INTERACTIVE STEM QUESTS HUB ---
+    let questsList = [
+      { id: 'q1', title: '✂️ Crease Precision', desc: 'Fold cardboard along dotted fold lines for 90° rigidity', xp: 15, completed: false },
+      { id: 'q2', title: '⚙️ Servo Zeroing', desc: 'Set motor horn to 90° before gluing arm linkage', xp: 20, completed: false },
+      { id: 'q3', title: '💧 Friction Check', desc: 'Check pivot hole clearance to reduce joint drag', xp: 20, completed: false },
+      { id: 'q4', title: '🎯 Placement Master', desc: 'Pass the 3-Question Diagnostic Assessment', xp: 30, completed: false }
+    ];
+
+    function renderSTEMQuests() {
+      const container = document.getElementById('quests-container');
+      if (!container) return;
+
+      const completedCount = questsList.filter(q => q.completed).length;
+      const totalQuests = questsList.length;
+      const progressPct = Math.round((completedCount / totalQuests) * 100);
+
+      let rankBadge = 'Paper Crafter 🌱';
+      if (completedCount >= 4) rankBadge = 'STEM Genius 🌟';
+      else if (completedCount >= 2) rankBadge = 'Linkage Master ⚙️';
+
+      container.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+          <h3 style="font-size:0.95rem; color:#0f172a; font-weight:700; display:flex; align-items:center; gap:0.35rem;">
+            🏆 Interactive STEM Quests & Badges
+          </h3>
+          <span class="badge badge-amber" style="font-size:0.7rem;">${rankBadge}</span>
+        </div>
+
+        <div style="background:#e2e8f0; border-radius:9999px; height:8px; overflow:hidden; margin-bottom:0.75rem;">
+          <div style="background:linear-gradient(90deg, #2563eb, #10b981); height:100%; width:${progressPct}%; transition:width 0.4s ease;"></div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:0.45rem;">
+          ${questsList.map(q => `
+            <div style="background:#f8fafc; border:1px solid ${q.completed ? '#a7f3d0' : '#e2e8f0'}; padding:0.5rem 0.65rem; border-radius:8px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <strong style="font-size:0.78rem; color:#0f172a;">${q.title}</strong>
+                <span style="display:block; font-size:0.7rem; color:#64748b;">${q.desc} (+${q.xp} XP)</span>
+              </div>
+              <button class="btn ${q.completed ? 'btn-secondary' : 'btn-primary'} btn-pill" style="font-size:0.7rem; padding:0.2rem 0.55rem; ${q.completed ? 'background:#ecfdf5; color:#047857; border-color:#a7f3d0;' : 'background:#2563eb;'}" onclick="completeQuest('${q.id}')">
+                ${q.completed ? '✓ Complete' : 'Do Quest 🎯'}
+              </button>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function completeQuest(qId) {
+      const q = questsList.find(item => item.id === qId);
+      if (!q || q.completed) return;
+
+      q.completed = true;
+      currentScore += q.xp;
+      document.getElementById('xp-badge').innerText = `Score: ${currentScore} XP`;
+      triggerConfetti();
+      renderSTEMQuests();
+    }
+
+    async function initApp() {
+      // Fetch characters
+      const cRes = await fetch(`${API_BASE}/characters`);
+      allCharacters = await cRes.json();
+      renderCharacters();
+      renderAgeList();
+      renderCircuitVisualizer('petalo');
+      renderServoLinkageLab();
+      renderSTEMQuests();
+
+      // Init session
+      await fetch(`${API_BASE}/session`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(currentProfile)
+      });
+
+      // Welcome message
+      addBotBubble(`Hello! I'm Petalo, your Funobotz STEM companion! Ask me anything about light or discovery cards!`);
+      setCheckQuestion("What is Petalo's main feature for exploring STEM concepts?", ["A light-up discovery friend with challenge cards", "High-speed space travel", "Solar panel cooking"], 0);
+    }
+
+    let ttsEnabled = true;
+    let currentLang = 'en-US'; // 'en-US' or 'hi-IN'
+
+    function toggleVoiceOutput() {
+      ttsEnabled = !ttsEnabled;
+      const btn = document.getElementById('tts-toggle-btn');
+      if (btn) btn.innerText = ttsEnabled ? '🔊 Voice: ON' : '🔇 Voice: OFF';
+      if (!ttsEnabled && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+    }
+
+    function toggleVoiceLang() {
+      currentLang = (currentLang === 'en-US') ? 'hi-IN' : 'en-US';
+      const btn = document.getElementById('lang-toggle-btn');
+      if (btn) {
+        btn.innerText = (currentLang === 'hi-IN') ? '🌐 Voice: HIN 🇮🇳' : '🌐 Voice: ENG 🇺🇸';
+      }
+      addBotBubble(currentLang === 'hi-IN' 
+        ? 'नमस्ते! अब आपकी फनोगॉट्ज़ STEM साथी हिंदी में बात करेगी।' 
+        : 'Switched voice mode to English! How can I help you explore STEM?');
+    }
+
+    function speakText(text, characterId = 'quacky') {
+      if (!('speechSynthesis' in window) || !ttsEnabled) return;
+      window.speechSynthesis.cancel();
+      const clean = text.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}]/gu, '').replace(/[*_#]/g, '');
+      const utter = new SpeechSynthesisUtterance(clean);
+      utter.lang = currentLang;
+
+      if (characterId === 'quacky') { utter.pitch = 1.4; utter.rate = 1.1; }
+      else if (characterId === 'tiko') { utter.pitch = 0.9; utter.rate = 1.0; }
+      else if (characterId === 'petalo') { utter.pitch = 1.2; utter.rate = 0.95; }
+      else if (characterId === 'tolly') { utter.pitch = 1.1; utter.rate = 1.0; }
+
+      const voices = window.speechSynthesis.getVoices();
+      const matchedVoice = voices.find(v => v.lang.includes(currentLang) || (currentLang === 'hi-IN' && v.lang.startsWith('hi')));
+      if (matchedVoice) utter.voice = matchedVoice;
+
+      window.speechSynthesis.speak(utter);
+    }
+
+    function startSpeechRecognition() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        alert("Speech recognition is not supported in your browser. Please type your question.");
+        return;
+      }
+
+      const recog = new SpeechRecognition();
+      recog.lang = currentLang;
+      recog.interimResults = false;
+
+      const micBtn = document.getElementById('mic-btn');
+      if (micBtn) {
+        micBtn.innerText = '🔴 Listening...';
+        micBtn.style.background = '#fee2e2';
+        micBtn.style.color = '#dc2626';
+      }
+
+      recog.onresult = (e) => {
+        const transcript = e.results[0][0].transcript;
+        const input = document.getElementById('chat-input-text');
+        if (input) input.value = transcript;
+        if (micBtn) {
+          micBtn.innerText = '🎤 Speak';
+          micBtn.style.background = '#ffffff';
+          micBtn.style.color = '#0f172a';
+        }
+        sendQuick(transcript);
+      };
+
+      recog.onerror = () => {
+        if (micBtn) {
+          micBtn.innerText = '🎤 Speak';
+          micBtn.style.background = '#ffffff';
+          micBtn.style.color = '#0f172a';
+        }
+      };
+
+      recog.start();
+    }
+
+    function openPaperAssemblyInspector(charId) {
+      const existing = document.getElementById('paper-modal');
+      if (existing) existing.remove();
+
+      const cid = (charId || currentProfile.active_character || 'quacky').toLowerCase();
+      const modal = document.createElement('div');
+      modal.id = 'paper-modal';
+      modal.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.7); display:flex; justify-content:center; align-items:center; z-index:10000; backdrop-filter:blur(4px);';
+
+      modal.innerHTML = `
+        <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:18px; padding:1.75rem; width:92%; max-width:600px; box-shadow:0 20px 40px rgba(0,0,0,0.15); color:#0f172a;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <h3 style="font-size:1.15rem; font-weight:700; color:#0f172a; display:flex; align-items:center; gap:0.4rem;">
+              📐 3D Paper Folding & Linkage Assembly Inspector (${cid.toUpperCase()})
+            </h3>
+            <button class="btn btn-secondary" onclick="document.getElementById('paper-modal').remove()">Close ✖</button>
+          </div>
+
+          <!-- Interactive 3D SVG Origami/Assembly Canvas -->
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:1.2rem; text-align:center; margin-bottom:1.2rem;">
+            <svg width="100%" height="180" viewBox="0 0 400 180">
+              <!-- Isometric paper folding plate -->
+              <polygon points="100,50 300,50 340,110 140,110" fill="#eff6ff" stroke="#2563eb" stroke-width="2" stroke-dasharray="4"/>
+              <!-- Fold crease lines -->
+              <line x1="200" y1="50" x2="240" y2="110" stroke="#dc2626" stroke-width="2" stroke-dasharray="2"/>
+              <!-- Motor linkage arm -->
+              <rect x="210" y="70" width="60" height="15" rx="4" fill="#fde68a" stroke="#b45309" stroke-width="2"/>
+              <circle cx="220" cy="77" r="4" fill="#0f172a"/>
+              <circle cx="260" cy="77" r="4" fill="#0f172a"/>
+
+              <text x="200" y="145" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">
+                Step 3: Fold Red Crease Lines at 90° & Align Motor Linkage Pivot Pins
+              </text>
+            </svg>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.5rem; font-size:0.78rem; text-align:center; margin-bottom:1.2rem;">
+            <div style="background:#f8fafc; padding:0.6rem; border-radius:8px; border:1px solid #e2e8f0;">
+              <strong style="color:#2563eb;">1. Cut & Crease</strong><br><span style="color:#64748b;">Precision paper template cutout</span>
+            </div>
+            <div style="background:#f8fafc; padding:0.6rem; border-radius:8px; border:1px solid #e2e8f0;">
+              <strong style="color:#b45309;">2. Battery & Motor</strong><br><span style="color:#64748b;">Insert 3.0V DC Motor & Switch</span>
+            </div>
+            <div style="background:#f8fafc; padding:0.6rem; border-radius:8px; border:1px solid #e2e8f0;">
+              <strong style="color:#047857;">3. Scorpio Linkage</strong><br><span style="color:#64748b;">Up & Down thread movement</span>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:0.75rem; color:#64748b;">Paper Mechanics Advantage: <strong>3.2x Mechanical Torque Ratio</strong></span>
+            <button class="btn btn-primary" onclick="alert('Assembly Printable Template downloaded!')">📥 Download Printable PDF Template</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    let circuitSwitchOn = true;
+    let circuitVoltage = 3.0;
+    let circuitReversePolarity = false;
+
+    function renderCircuitVisualizer(charId = 'quacky') {
+      const container = document.getElementById('circuit-container');
+      if (!container) return;
+      const cid = (charId || 'quacky').toLowerCase();
+      const isMotor = ['quacky', 'tiko', 'chicky', 'wavy', 'kutty-omni', 'omni'].includes(cid);
+      const isLight = ['petalo', 'tolly'].includes(cid);
+      
+      const current_mA = circuitSwitchOn ? Math.round(circuitVoltage * 45) : 0;
+      const motor_rpm = circuitSwitchOn ? Math.round(circuitVoltage * 85) : 0;
+      const flowSpeed = (6.0 / circuitVoltage) * 0.8;
+      const strokeColor = circuitSwitchOn ? (isMotor ? '#2563eb' : isLight ? '#d97706' : '#059669') : '#94a3b8';
+      
+      container.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; flex-wrap:wrap; gap:0.4rem;">
+          <strong style="font-size:0.85rem; color:#0f172a; display:flex; align-items:center; gap:0.3rem; font-weight:700;">
+            ⚡ ${cid.toUpperCase()} Interactive Circuit & Physics Lab
+          </strong>
+          <div style="display:flex; gap:0.4rem;">
+            <button class="btn btn-secondary btn-pill" style="font-size:0.7rem; padding:0.2rem 0.6rem;" onclick="togglePolarity('${cid}')" title="Reverse Current Flow Direction">
+              🔄 ${circuitReversePolarity ? 'Polarity: REV (-/+)' : 'Polarity: NOR (+/-)'}
+            </button>
+            <button class="btn btn-secondary btn-pill" style="font-size:0.7rem; padding:0.2rem 0.6rem;" onclick="toggleCircuitSwitch('${cid}')">
+              ${circuitSwitchOn ? '🟢 Switch: ON' : '🔴 Switch: OFF'}
+            </button>
+          </div>
+        </div>
+
+        <svg width="100%" height="100" viewBox="0 0 300 100" style="background:#ffffff; border-radius:8px; border:1px solid #e2e8f0;">
+          <!-- Wire loop -->
+          <path d="M 40 50 L 40 20 L 260 20 L 260 50 L 260 80 L 40 80 Z" fill="none" stroke="${circuitSwitchOn ? strokeColor : '#cbd5e1'}" stroke-width="3" />
+          ${circuitSwitchOn ? `<path d="M 40 50 L 40 20 L 260 20 L 260 50 L 260 80 L 40 80 Z" fill="none" stroke="#059669" stroke-width="3" stroke-dasharray="6" style="animation: flowAnim ${flowSpeed}s linear infinite ${circuitReversePolarity ? 'reverse' : 'normal'};" />` : ''}
+          
+          <!-- Battery -->
+          <rect x="25" y="35" width="30" height="30" rx="5" fill="#f8fafc" stroke="#d97706" stroke-width="2"/>
+          <text x="40" y="54" fill="#b45309" font-size="10" font-weight="bold" text-anchor="middle">🔋 ${circuitVoltage}V</text>
+
+          <!-- Knife Switch -->
+          <circle cx="150" cy="20" r="4" fill="#0f172a"/>
+          <line x1="150" y1="20" x2="${circuitSwitchOn ? '170' : '165'}" y2="${circuitSwitchOn ? '20' : '8'}" stroke="${circuitSwitchOn ? '#059669' : '#dc2626'}" stroke-width="3"/>
+          <circle cx="170" cy="20" r="4" fill="#0f172a"/>
+
+          <!-- Component Load -->
+          <g transform="translate(235, 35)">
+            <rect x="0" y="0" width="50" height="30" rx="6" fill="#f8fafc" stroke="${strokeColor}" stroke-width="2"/>
+            <text x="25" y="19" fill="${strokeColor}" font-size="11" font-weight="bold" text-anchor="middle">
+              ${isMotor ? '⚙️ Motor' : isLight ? '💡 LED' : '🤖 Micro'}
+            </text>
+          </g>
+        </svg>
+
+        <!-- Voltage & Physics Controls Bar -->
+        <div style="margin-top:0.6rem; background:#f8fafc; border:1px solid #e2e8f0; padding:0.65rem; border-radius:8px; display:flex; flex-direction:column; gap:0.4rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.75rem;">
+            <span style="color:#475569;">Voltage Regulator: <strong style="color:#0f172a;">${circuitVoltage}V</strong></span>
+            <span style="color:#059669;">Current: <strong>${current_mA} mA</strong></span>
+            <span style="color:#2563eb;">Motor Output: <strong>${isMotor ? motor_rpm + ' RPM' : isLight ? 'LUMENS LOW' : 'ACTIVE'}</strong></span>
+          </div>
+          <input type="range" min="1.5" max="6.0" step="0.5" value="${circuitVoltage}" style="width:100%; accent-color:#2563eb; cursor:pointer;" oninput="updateCircuitVoltage(this.value, '${cid}')" />
+        </div>
+
+        <div style="font-size:0.72rem; color:#64748b; margin-top:0.4rem; text-align:center;">
+          Physics Chain: <span style="color:#b45309; font-weight:600;">Chemical Energy</span> ➔ <span style="color:#059669; font-weight:600;">Electrical Current</span> ➔ <span style="color:#2563eb; font-weight:600;">${isMotor ? 'Mechanical Torque' : 'Optical Light'}</span>
+        </div>
+      `;
+    }
+
+    function updateCircuitVoltage(val, charId) {
+      circuitVoltage = parseFloat(val);
+      renderCircuitVisualizer(charId);
+    }
+
+    function togglePolarity(charId) {
+      circuitReversePolarity = !circuitReversePolarity;
+      renderCircuitVisualizer(charId);
+    }
+
+    function toggleCircuitSwitch(charId) {
+      circuitSwitchOn = !circuitSwitchOn;
+      renderCircuitVisualizer(charId);
+    }
+
+    let loginStep = 1;
+    let quizAnswers = {};
+
+    function openLoginModal() {
+      const existing = document.getElementById('login-modal');
+      if (existing) existing.remove();
+
+      loginStep = 1;
+      quizAnswers = {};
+
+      const modal = document.createElement('div');
+      modal.id = 'login-modal';
+      modal.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.6); display:flex; justify-content:center; align-items:center; z-index:10000; backdrop-filter:blur(4px);';
+
+      renderLoginModalContent(modal);
+      document.body.appendChild(modal);
+    }
+
+    function renderLoginModalContent(modal) {
+      if (!modal) modal = document.getElementById('login-modal');
+      if (!modal) return;
+
+      if (loginStep === 1) {
+        modal.innerHTML = `
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:16px; padding:1.75rem; width:92%; max-width:520px; box-shadow:0 20px 40px rgba(0,0,0,0.12); color:#0f172a;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+              <h2 style="font-size:1.2rem; color:#0f172a; font-weight:700;">🔑 Learner Account Sign-In</h2>
+              <span class="badge badge-blue">Step 1 of 2</span>
+            </div>
+
+            <p style="font-size:0.82rem; color:#64748b; margin-bottom:1rem;">Sign in or create a learner profile to access personalized STEM companions & challenges.</p>
+
+            <div style="display:flex; flex-direction:column; gap:0.85rem; margin-bottom:1.25rem;">
+              <div>
+                <label style="font-size:0.78rem; font-weight:600; color:#334155; display:block; margin-bottom:0.3rem;">Learner Username / Name:</label>
+                <input type="text" id="login-name-field" class="chat-input" value="${currentProfile.name || 'Spark Learner'}" style="width:100%; border-color:#cbd5e1; color:#0f172a; background:#f8fafc;" />
+              </div>
+
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+                <div>
+                  <label style="font-size:0.78rem; font-weight:600; color:#334155; display:block; margin-bottom:0.3rem;">Learner Age:</label>
+                  <select id="login-age-select" class="chat-input" style="width:100%; border-color:#cbd5e1; color:#0f172a; background:#f8fafc;">
+                    <option value="8" ${currentProfile.age === 8 ? 'selected' : ''}>Age 8 (Beginner)</option>
+                    <option value="9" ${currentProfile.age === 9 ? 'selected' : ''}>Age 9 (Beginner)</option>
+                    <option value="10" ${currentProfile.age === 10 ? 'selected' : ''}>Age 10 (Beginner)</option>
+                    <option value="11" ${currentProfile.age === 11 ? 'selected' : ''}>Age 11 (Intermediate)</option>
+                    <option value="12" ${currentProfile.age >= 12 ? 'selected' : ''}>Age 12+ (Advanced)</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="font-size:0.78rem; font-weight:600; color:#334155; display:block; margin-bottom:0.3rem;">Product Access ID:</label>
+                  <select id="login-cust-select" class="chat-input" style="width:100%; border-color:#cbd5e1; color:#0f172a; background:#f8fafc;">
+                    <option value="FZ-HACK-001">FZ-HACK-001 (Full Roster)</option>
+                    <option value="FZ-HACK-002">FZ-HACK-002 (Motors/Tiko)</option>
+                    <option value="FZ-HACK-003">FZ-HACK-003 (Light/Petalo)</option>
+                    <option value="FZ-HACK-004">FZ-HACK-004 (Multi-Product)</option>
+                    <option value="FZ-HACK-005">FZ-HACK-005 (Restricted)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Quick Demo Account Presets -->
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:0.75rem; border-radius:10px;">
+                <span style="font-size:0.73rem; font-weight:600; color:#64748b; display:block; margin-bottom:0.4rem;">⚡ Quick Demo Accounts:</span>
+                <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+                  <button class="btn btn-secondary btn-pill" style="font-size:0.72rem; padding:0.2rem 0.55rem;" onclick="quickLoginDemo(8, 'Petalo Light', 'petalo')">👦 Alex (Age 8)</button>
+                  <button class="btn btn-secondary btn-pill" style="font-size:0.72rem; padding:0.2rem 0.55rem;" onclick="quickLoginDemo(11, 'Tiko Motor', 'tiko')">👧 Sam (Age 11)</button>
+                  <button class="btn btn-secondary btn-pill" style="font-size:0.72rem; padding:0.2rem 0.55rem;" onclick="quickLoginDemo(12, 'Tolly Circuits', 'tolly')">🎓 Chris (Age 12)</button>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:flex-end; gap:0.6rem;">
+              <button class="btn btn-secondary" onclick="document.getElementById('login-modal').remove()">Cancel</button>
+              <button class="btn btn-primary" onclick="proceedToQuizStep()">Next: 3-Question Placement Quiz ➡️</button>
+            </div>
+          </div>
+        `;
+      } else if (loginStep === 2) {
+        modal.innerHTML = `
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:16px; padding:1.75rem; width:92%; max-width:540px; box-shadow:0 20px 40px rgba(0,0,0,0.12); color:#0f172a;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+              <h2 style="font-size:1.15rem; color:#0f172a; font-weight:700;">🎯 STEM Placement Diagnostic Assessment</h2>
+              <span class="badge badge-emerald">Step 2 of 2 (3 Questions)</span>
+            </div>
+
+            <p style="font-size:0.8rem; color:#64748b; margin-bottom:1rem;">Answer 3 quick questions to automatically personalize your companion, topic, and difficulty level:</p>
+
+            <div style="display:flex; flex-direction:column; gap:1rem; margin-bottom:1.25rem;">
+              <!-- Question 1 -->
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:0.75rem 0.9rem; border-radius:10px;">
+                <label style="font-size:0.82rem; font-weight:700; color:#0f172a; display:block; margin-bottom:0.4rem;">
+                  1. What STEM topic are you most excited to explore?
+                </label>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4rem;">
+                  <button class="btn btn-secondary" style="font-size:0.75rem; text-align:left; justify-content:flex-start;" onclick="selectQuizAns(1, 'light', 'petalo', this)">💡 Light & Discovery (Petalo)</button>
+                  <button class="btn btn-secondary" style="font-size:0.75rem; text-align:left; justify-content:flex-start;" onclick="selectQuizAns(1, 'motors', 'tiko', this)">⚙️ Motors & Tail Movement (Tiko)</button>
+                  <button class="btn btn-secondary" style="font-size:0.75rem; text-align:left; justify-content:flex-start;" onclick="selectQuizAns(1, 'stories', 'quacky', this)">🦆 Duck Mechanics (Quacky)</button>
+                  <button class="btn btn-secondary" style="font-size:0.75rem; text-align:left; justify-content:flex-start;" onclick="selectQuizAns(1, 'circuits', 'tolly', this)">⚡ Electronic LED Circuits (Tolly)</button>
+                </div>
+              </div>
+
+              <!-- Question 2 -->
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:0.75rem 0.9rem; border-radius:10px;">
+                <label style="font-size:0.82rem; font-weight:700; color:#0f172a; display:block; margin-bottom:0.4rem;">
+                  2. What is your current experience with paper robotics?
+                </label>
+                <div style="display:flex; flex-direction:column; gap:0.35rem;">
+                  <button class="btn btn-secondary" style="font-size:0.75rem; text-align:left; justify-content:flex-start;" onclick="selectQuizAns(2, 'Beginner', null, this)">🌱 Beginner - First time exploring STEM!</button>
+                  <button class="btn btn-secondary" style="font-size:0.75rem; text-align:left; justify-content:flex-start;" onclick="selectQuizAns(2, 'Intermediate', null, this)">🔧 Intermediate - I built simple battery circuits before.</button>
+                  <button class="btn btn-secondary" style="font-size:0.75rem; text-align:left; justify-content:flex-start;" onclick="selectQuizAns(2, 'Advanced', null, this)">🔬 Advanced - I understand motors, switches & current paths!</button>
+                </div>
+              </div>
+
+              <!-- Question 3 -->
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:0.75rem 0.9rem; border-radius:10px;">
+                <label style="font-size:0.82rem; font-weight:700; color:#0f172a; display:block; margin-bottom:0.4rem;">
+                  3. How would you like your companion to teach you?
+                </label>
+                <div style="display:flex; flex-direction:column; gap:0.35rem;">
+                  <button class="btn btn-secondary" style="font-size:0.75rem; text-align:left; justify-content:flex-start;" onclick="selectQuizAns(3, 'stories', null, this)">🎨 Fun guided story cards & simple explanations</button>
+                  <button class="btn btn-secondary" style="font-size:0.75rem; text-align:left; justify-content:flex-start;" onclick="selectQuizAns(3, 'experiments', null, this)">🛠️ Step-by-step motor challenges & hands-on builds</button>
+                  <button class="btn btn-secondary" style="font-size:0.75rem; text-align:left; justify-content:flex-start;" onclick="selectQuizAns(3, 'physics', null, this)">🧠 Deep scientific principles & physics formulas</button>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <button class="btn btn-secondary" onclick="loginStep=1; renderLoginModalContent();">⬅️ Back to Step 1</button>
+              <button class="btn btn-primary" onclick="finishDiagnosticQuiz()">🎉 Finish Quiz & Start STEM Studio</button>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function quickLoginDemo(ageVal, nameLabel, charId) {
+      document.getElementById('login-name-field').value = nameLabel;
+      document.getElementById('login-age-select').value = ageVal;
+      quizAnswers = { topic: 'motors', char: charId, level: ageVal >= 11 ? 'Intermediate' : 'Beginner' };
+      proceedToQuizStep();
+    }
+
+    function proceedToQuizStep() {
+      const nameVal = document.getElementById('login-name-field')?.value.trim() || 'Learner';
+      const ageVal = parseInt(document.getElementById('login-age-select')?.value || '8');
+      const custVal = document.getElementById('login-cust-select')?.value || 'FZ-HACK-001';
+
+      currentProfile.name = nameVal;
+      currentProfile.age = ageVal;
+      currentProfile.customer_id = custVal;
+
+      loginStep = 2;
+      renderLoginModalContent();
+    }
+
+    function selectQuizAns(qNum, val, charId, btnElem) {
+      if (btnElem && btnElem.parentNode) {
+        const btns = btnElem.parentNode.querySelectorAll('.btn');
+        btns.forEach(b => {
+          b.style.background = '#ffffff';
+          b.style.borderColor = '#e2e8f0';
+          b.style.color = '#0f172a';
+        });
+        btnElem.style.background = '#eff6ff';
+        btnElem.style.borderColor = '#2563eb';
+        btnElem.style.color = '#1e40af';
+      }
+
+      if (qNum === 1) {
+        quizAnswers.topic = val;
+        if (charId) quizAnswers.char = charId;
+      } else if (qNum === 2) {
+        quizAnswers.level = val;
+      } else if (qNum === 3) {
+        quizAnswers.style = val;
+      }
+    }
+
+    async function finishDiagnosticQuiz() {
+      if (quizAnswers.char) currentProfile.active_character = quizAnswers.char;
+      if (quizAnswers.level) {
+        currentProfile.starting_knowledge = quizAnswers.level;
+        currentProfile.current_level = quizAnswers.level === 'Beginner' ? 0 : quizAnswers.level === 'Intermediate' ? 1 : 2;
+      }
+      if (quizAnswers.topic) currentProfile.current_topic = quizAnswers.topic;
+
+      // Award +30 XP for completing diagnostic assessment
+      currentScore += 30;
+      document.getElementById('xp-badge').innerText = `Score: ${currentScore} XP`;
+
+      renderAgeList();
+      selectCharacter(currentProfile.active_character);
+
+      await fetch(`${API_BASE}/session`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(currentProfile)
+      });
+
+      const modal = document.getElementById('login-modal');
+      if (modal) modal.remove();
+
+      document.getElementById('chat-messages').innerHTML = '';
+      const char = allCharacters.find(c => c.id === currentProfile.active_character);
+      addBotBubble(`🎉 Welcome **${currentProfile.name}**! Your 3-Question Placement Quiz is complete (+30 XP)! I'm **${char ? char.name : 'Funobotz Companion'}**, adapted to your learning focus. Ask me anything!`);
+    }
+
+    function openCertificateModal() {
+      const existing = document.getElementById('cert-modal');
+      if (existing) existing.remove();
+
+      const modal = document.createElement('div');
+      modal.id = 'cert-modal';
+      modal.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.8); display:flex; justify-content:center; align-items:center; z-index:10000; backdrop-filter:blur(6px);';
+      const charName = document.getElementById('companion-name')?.innerText || 'Funobotz Companion';
+      
+      modal.innerHTML = `
+        <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:16px; padding:2rem; width:90%; max-width:520px; text-align:center; box-shadow:0 10px 25px rgba(0,0,0,0.1); color:#0f172a;">
+          <div style="font-size:3rem; margin-bottom:0.4rem;">🏆</div>
+          <h2 style="color:#0f172a; font-size:1.3rem; margin-bottom:0.2rem; font-weight:800; letter-spacing:-0.3px;">OFFICIAL STEM EXPLORER CERTIFICATE</h2>
+          <p style="color:#64748b; font-size:0.8rem; margin-bottom:1.25rem;">Funobotz Paper Robotics Hackathon 2026</p>
+          
+          <div style="background:#f8fafc; padding:1.2rem; border-radius:12px; margin-bottom:1.25rem; border:1px solid #e2e8f0;">
+            <p style="font-size:0.85rem; color:#64748b; margin-bottom:0.2rem;">This certifies that</p>
+            <h3 style="color:#2563eb; font-size:1.35rem; margin:0.4rem 0; font-weight:800;">${currentProfile.name || 'Spark Learner'}</h3>
+            <p style="font-size:0.82rem; color:#475569;">has successfully mastered STEM concepts with companion <strong style="color:#0f172a;">${charName}</strong></p>
+            
+            <div style="display:flex; justify-content:center; gap:1.25rem; margin-top:1rem; font-size:0.85rem;">
+              <div><strong style="color:#b45309;">Score:</strong> ${currentScore} XP</div>
+              <div><strong style="color:#2563eb;">Age:</strong> ${currentProfile.age}</div>
+              <div><strong style="color:#047857;">Level:</strong> ${document.getElementById('badge-level')?.innerText || 'Beginner'}</div>
+            </div>
+          </div>
+          
+          <div style="display:flex; justify-content:center; gap:0.75rem;">
+            <button class="btn btn-primary" onclick="window.print()">🖨️ Print / Save PDF</button>
+            <button class="btn btn-secondary" onclick="document.getElementById('cert-modal').remove()">Close</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    async function start3MinJudgeWalkthrough() {
+      const steps = [
+        { label: "1/6: Learner Age Personalization (Age 8 - Petalo Light)", action: async () => { await selectAge(8); } },
+        { label: "2/6: Topic & Character Switching (Tiko Scorpio Motor)", action: async () => { await selectCharacter('tiko', true); } },
+        { label: "3/6: Grounding & Unapproved Fact Refusal Check", action: async () => { await sendQuick("What is Tiko's favorite food?"); } },
+        { label: "4/6: Product Access Control Enforcement (FZ-HACK-005)", action: async () => { currentProfile.customer_id = "FZ-HACK-005"; await sendQuick("How do I build Quacky's motor circuit?"); } },
+        { label: "5/6: Ambiguity Resolution (Vague Question)", action: async () => { await sendQuick("Why does it move?"); } },
+        { label: "6/6: Continuous Q&A & STEM Explorer Certificate Unlock", action: async () => { currentScore = 50; document.getElementById('xp-badge').innerText = "Score: 50 XP"; openCertificateModal(); } }
+      ];
+
+      let banner = document.getElementById('demo-walkthrough-banner');
+      if (!banner) {
+        banner = document.createElement('div');
+        banner.id = 'demo-walkthrough-banner';
+        banner.style.cssText = 'position:fixed; top:70px; left:50%; transform:translateX(-50%); z-index:9999; background:#0f172a; color:#fff; padding:0.6rem 1.3rem; border-radius:30px; font-weight:600; box-shadow:0 4px 14px rgba(0,0,0,0.15); font-size:0.85rem;';
+        document.body.appendChild(banner);
+      }
+
+      for (let s of steps) {
+        banner.innerText = `🎬 3-MIN JUDGE PRESENTATION: ${s.label}`;
+        await s.action();
+        await new Promise(r => setTimeout(r, 2400));
+      }
+      banner.innerText = "🎉 3-Minute Demo Walkthrough Complete!";
+      setTimeout(() => banner.remove(), 4000);
+    }
+
+    function renderAgeList() {
+      const container = document.getElementById('age-selector-list');
+      container.innerHTML = Object.entries(SYNTHETIC_AGE_PROFILES).map(([age, p]) => {
+        const isSelected = (currentProfile.age === parseInt(age) || (parseInt(age) === 12 && currentProfile.age >= 12));
+        return `
+          <div class="age-card ${isSelected ? 'active' : ''}" onclick="selectAge(${age})">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong style="font-size:0.85rem; color:${isSelected ? '#2563eb' : '#0f172a'}">${p.name}</strong>
+              <span class="badge ${p.level.includes('Level 0') ? 'badge-blue' : p.level.includes('Level 1') ? 'badge-emerald' : 'badge-amber'}" style="font-size:0.65rem;">
+                ${p.level}
+              </span>
+            </div>
+            <p style="font-size:0.73rem; color:#64748b; margin-top:0.35rem;">${p.desc}</p>
+          </div>
+        `;
+      }).join('');
+
+      const startKnow = currentProfile.starting_knowledge || (currentProfile.current_level === 0 ? 'Beginner' : currentProfile.current_level === 1 ? 'Intermediate' : 'Advanced');
+      document.getElementById('badge-user').innerText = `${currentProfile.name || 'Learner'}`;
+      document.getElementById('badge-level').innerText = `Level ${currentProfile.current_level || 0} (${startKnow})`;
+    }
+
+    async function selectAge(ageNum) {
+      const age = parseInt(ageNum);
+      const res = await fetch(`${API_BASE}/learner/select-age?age=${age}&customer_id=${currentProfile.customer_id}`, { method: 'POST' });
+      const newProfile = await res.json();
+      currentProfile = newProfile;
+      if (!currentProfile.starting_knowledge) {
+        currentProfile.starting_knowledge = currentProfile.current_level === 0 ? 'Beginner' : currentProfile.current_level === 1 ? 'Intermediate' : 'Advanced';
+      }
+
+      renderAgeList();
+      selectCharacter(currentProfile.active_character);
+
+      await fetch(`${API_BASE}/session`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(currentProfile)
+      });
+
+      document.getElementById('chat-messages').innerHTML = '';
+      const char = allCharacters.find(c => c.id === currentProfile.active_character);
+      const startKnow = currentProfile.starting_knowledge || 'Beginner';
+      addBotBubble(`Welcome! I adapted your STEM companion to ${char ? char.name : 'Funobotz Companion'} for Age ${currentProfile.age} (${startKnow} level). What would you like to explore?`);
+    }
+
+    function renderCharacters() {
+      const container = document.getElementById('char-grid');
+      container.innerHTML = allCharacters.map(c => `
+        <div class="char-card ${currentProfile.active_character === c.id ? 'active' : ''}" onclick="selectCharacter('${c.id}', true)">
+          <div style="font-size:1.4rem;">${c.avatar}</div>
+          <strong style="font-size:0.78rem;">${c.name}</strong>
+        </div>
+      `).join('');
+    }
+
+    async function selectCharacter(cid, triggerGreet = false) {
+      currentProfile.active_character = cid;
+      renderCharacters();
+      renderCircuitVisualizer(cid);
+      const char = allCharacters.find(c => c.id === cid);
+      if (char) {
+        document.getElementById('companion-avatar').innerText = char.avatar;
+        document.getElementById('companion-name').innerText = char.name;
+        document.getElementById('companion-topic').innerText = `Topic: ${char.stem_concepts[0] || 'learning'}`;
+        if (triggerGreet) {
+          await sendQuick(`Tell me about ${char.name} and how it works!`);
+        }
+      }
+    }
+
+    function addBubble(text, isUser, extras = {}) {
+      const feed = document.getElementById('chat-messages');
+      const div = document.createElement('div');
+      div.className = `chat-bubble ${isUser ? 'user' : 'bot'}`;
+
+      let html = '';
+      if (!isUser && extras.escalation_triggered) {
+        html += `<span class="badge badge-amber" style="font-size:0.65rem; margin-bottom:0.4rem;">⚡ Complexity Escalated</span><br>`;
+      }
+      if (!isUser && extras.access_notice) {
+        html += `<div style="background:rgba(244,63,94,0.15); border:1px solid rgba(244,63,94,0.3); padding:0.4rem; border-radius:6px; font-size:0.78rem; color:#fda4af; margin-bottom:0.4rem;">${extras.access_notice}</div>`;
+      }
+      if (!isUser && extras.unsupported_fact_notice) {
+        html += `<div style="background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.3); padding:0.4rem; border-radius:6px; font-size:0.78rem; color:#fcd34d; margin-bottom:0.4rem;">${extras.unsupported_fact_notice}</div>`;
+      }
+
+      html += (text || '').replace(/\n/g, '<br>');
+
+      if (!isUser) {
+        if (extras.options && extras.options.length > 0) {
+          html += `<div style="margin-top:0.6rem; display:flex; flex-direction:column; gap:0.3rem;">`;
+          extras.options.forEach(opt => {
+            html += `<button class="btn btn-secondary btn-pill" style="justify-content:flex-start; text-transform:none;" onclick="sendQuick('${opt.replace(/'/g, "\\'")}')">👉 ${opt}</button>`;
+          });
+          html += `</div>`;
+        }
+
+        const safeText = (text || '').replace(/'/g, "\\'").replace(/\n/g, ' ');
+        html += `
+          <div style="margin-top:0.6rem; padding-top:0.4rem; border-top:1px dashed #cbd5e1; display:flex; gap:0.35rem; flex-wrap:wrap;">
+            <button class="btn btn-secondary btn-pill" style="font-size:0.68rem; padding:0.15rem 0.5rem;" onclick="sendQuick('Can you explain that simpler for a beginner?')">💡 Explain Simpler</button>
+            <button class="btn btn-secondary btn-pill" style="font-size:0.68rem; padding:0.15rem 0.5rem;" onclick="openPaperAssemblyInspector('${currentProfile.active_character}')">📐 3D Blueprint</button>
+            <button class="btn btn-secondary btn-pill" style="font-size:0.68rem; padding:0.15rem 0.5rem;" onclick="speakText('${safeText}', '${currentProfile.active_character}')">🔊 Replay Audio</button>
+          </div>
+        `;
+      }
+
+      div.innerHTML = html;
+      feed.appendChild(div);
+      feed.scrollTop = feed.scrollHeight;
+    }
+
+    function addBotBubble(text, extras = {}) {
+      addBubble(text, false, extras);
+      speakText(text, currentProfile.active_character);
+    }
+    function addUserBubble(text) { addBubble(text, true); }
+
+    async function handleSend(e) {
+      if (e) e.preventDefault();
+      const input = document.getElementById('chat-input-text');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      sendQuick(text);
+    }
+
+    async function sendQuick(msgText) {
+      addUserBubble(msgText);
+      const gKey = document.getElementById('gemini-key-input')?.value.trim();
+      const res = await fetch(`${API_BASE}/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          session_id: sessionId,
+          message: msgText,
+          customer_id: currentProfile.customer_id,
+          learner_profile: currentProfile,
+          requested_character: currentProfile.active_character,
+          api_key: gKey || undefined
+        })
+      });
+      const data = await res.json();
+      addBotBubble(data.answer, data);
+
+      // Sync active states
+      currentProfile.active_character = data.active_character;
+      currentProfile.current_topic = data.active_topic;
+      currentProfile.starting_knowledge = data.difficulty;
+
+      document.getElementById('companion-topic').innerText = `Topic: ${data.active_topic}`;
+      document.getElementById('companion-diff').innerText = `${data.difficulty}`;
+      renderCharacters();
+
+      if (data.check_question && data.options) {
+        setCheckQuestion(data.check_question, data.options, data.correct_option || 0);
+      }
+    }
+
+    let nextQuestionTimer = null;
+
+    function setCheckQuestion(q, opts, correctIdx) {
+      if (nextQuestionTimer) clearTimeout(nextQuestionTimer);
+      document.getElementById('check-question').innerText = `❓ ${q}`;
+      latestCorrectOption = correctIdx;
+      const optContainer = document.getElementById('check-options');
+      document.getElementById('check-feedback').style.display = 'none';
+
+      optContainer.innerHTML = opts.map((opt, idx) => `
+        <button class="btn btn-secondary" style="text-align:left; justify-content:flex-start;" onclick="answerCheck(${idx})">${opt}</button>
+      `).join('');
+    }
+
+    async function answerCheck(idx) {
+      const isCorrect = (idx === latestCorrectOption);
+      const res = await fetch(`${API_BASE}/learning-check`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          session_id: sessionId,
+          question: document.getElementById('check-question').innerText,
+          selected_option: idx,
+          correct_option: latestCorrectOption
+        })
+      });
+      const data = await res.json();
+
+      if (isCorrect) currentScore += 10;
+      document.getElementById('xp-badge').innerText = `Score: ${currentScore} XP`;
+
+      const fb = document.getElementById('check-feedback');
+      fb.style.display = 'block';
+      fb.style.background = isCorrect ? 'rgba(16,185,129,0.2)' : 'rgba(244,63,94,0.2)';
+      fb.style.border = `1px solid ${isCorrect ? '#10b981' : '#f43f5e'}`;
+      fb.style.color = isCorrect ? '#34d399' : '#fda4af';
+
+      let fbHtml = data.feedback;
+      if (data.next_question && data.next_options) {
+        fbHtml += ` <button class="btn btn-primary btn-pill" style="font-size:0.75rem; margin-left:0.5rem; padding:0.2rem 0.6rem;" onclick="loadNextQuestion('${data.next_question.replace(/'/g, "\\'")}', ${JSON.stringify(data.next_options).replace(/"/g, '&quot;')}, ${data.next_correct_option || 0})">Next Question ➡️</button>`;
+      }
+      fb.innerHTML = fbHtml;
+
+      if (data.next_question && data.next_options) {
+        nextQuestionTimer = setTimeout(() => {
+          setCheckQuestion(data.next_question, data.next_options, data.next_correct_option || 0);
+        }, 1800);
+      }
+    }
+
+    function loadNextQuestion(q, opts, correctIdx) {
+      if (nextQuestionTimer) clearTimeout(nextQuestionTimer);
+      setCheckQuestion(q, opts, correctIdx);
+    }
+
+    async function runScenario(id) {
+      const res = await fetch(`${API_BASE}/demo/scenario`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ scenario_id: id })
+      });
+      const data = await res.json();
+      currentProfile = data.profile;
+      sessionId = data.session_id;
+
+      renderAgeList();
+
+      document.getElementById('chat-messages').innerHTML = '';
+      addUserBubble(data.request_message);
+      addBotBubble(data.response.answer, data.response);
+
+      if (data.response.check_question && data.response.options) {
+        setCheckQuestion(data.response.check_question, data.response.options, data.response.correct_option || 0);
+      }
+    }
+
+    function toggleWidgetView() {
+      window.open('/demo/embed.html', '_blank');
+    }
+
+    window.onload = initApp;
+  </script>
+</body>
+</html>

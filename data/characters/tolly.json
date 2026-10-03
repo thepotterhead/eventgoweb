@@ -1,0 +1,26 @@
+{
+  "id": "tolly",
+  "name": "Tolly",
+  "status": "mapped",
+  "avatar": "🚥",
+  "tagline": "Traffic Sequencer Bot",
+  "official_context": "A character using a timer circuit and red-yellow-green LED sequence.",
+  "product_id": "tolly",
+  "verified_facts": [
+    "Tolly uses a timer circuit and a red-yellow-green LED sequence.",
+    "Tolly demonstrates electronic sequencing through repeating light patterns.",
+    "Tolly connects real-world electronics like traffic lights to circuit connections."
+  ],
+  "stem_concepts": [
+    "timer circuits",
+    "LEDs",
+    "electronic sequencing",
+    "circuit connections",
+    "real-world electronics"
+  ],
+  "learning_materials": {
+    "beginner": "Tolly lights up LEDs in red, yellow, and green order just like real traffic signals!",
+    "intermediate": "Tolly's timer circuit regulates electricity flow to trigger each LED in a timed sequence.",
+    "advanced": "Timer circuits control frequency and duty cycles to cycle through LED states predictably."
+  }
+}

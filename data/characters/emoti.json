@@ -1,0 +1,21 @@
+{
+  "id": "emoti",
+  "name": "Emoti",
+  "status": "behaviour_only",
+  "avatar": "😊",
+  "tagline": "Expression Bot",
+  "official_context": "An expression bot that brings emotions to life through simple movements and reactions.",
+  "product_id": null,
+  "verified_facts": [
+    "Emoti is an expression bot that brings emotions to life through simple movements and reactions."
+  ],
+  "stem_concepts": [
+    "movement and reaction",
+    "emotional expression mechanisms"
+  ],
+  "learning_materials": {
+    "beginner": "Emoti shows feelings by moving and reacting!",
+    "intermediate": "Emoti translates input signals into physical movement to express reactions.",
+    "advanced": "Deeper STEM concept mapping for Emoti is pending organizer-supplied material."
+  }
+}

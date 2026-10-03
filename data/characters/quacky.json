@@ -1,0 +1,26 @@
+{
+  "id": "quacky",
+  "name": "Quacky",
+  "status": "mapped",
+  "avatar": "🦆",
+  "tagline": "Movable Duck Bot",
+  "official_context": "A movable duck bot powered by a BO motor through a simple circuit.",
+  "product_id": "quacky",
+  "verified_facts": [
+    "Quacky is a movable duck bot powered by a BO motor through a simple circuit.",
+    "Quacky transforms chemical energy from batteries into electrical energy and mechanical movement.",
+    "Quacky demonstrates electronic cause and effect through simple motor control."
+  ],
+  "stem_concepts": [
+    "motors",
+    "batteries",
+    "simple circuits",
+    "electrical energy to mechanical motion",
+    "cause and effect"
+  ],
+  "learning_materials": {
+    "beginner": "Quacky waddles and moves when electricity flows from the battery into its motor!",
+    "intermediate": "Connecting Quacky's circuit sends current through the BO motor coil, creating a magnetic force that spins gears and waddles Quacky.",
+    "advanced": "Energy conversion in Quacky: Battery chemical potential -> electrical current -> electromagnetic induction -> mechanical motion."
+  }
+}

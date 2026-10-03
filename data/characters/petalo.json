@@ -1,0 +1,26 @@
+{
+  "id": "petalo",
+  "name": "Petalo",
+  "status": "mapped",
+  "avatar": "🌸",
+  "tagline": "Light-Up Discovery Friend",
+  "official_context": "A light-up discovery friend used with challenge cards and connected subworlds.",
+  "product_id": "petalo",
+  "verified_facts": [
+    "Petalo is a light-up discovery friend used with challenge cards and connected subworlds.",
+    "Petalo encourages observation of light in everyday environments.",
+    "Petalo teaches cause and effect, safety awareness, and clear scientific communication."
+  ],
+  "stem_concepts": [
+    "light in everyday environments",
+    "cause and effect",
+    "observation",
+    "safety awareness",
+    "communication"
+  ],
+  "learning_materials": {
+    "beginner": "Petalo glows bright when you complete challenge cards to explore light around us!",
+    "intermediate": "Petalo helps us observe how light reflects, travels, and creates cause-and-effect reactions.",
+    "advanced": "Petalo combines photic observation with structured challenge protocols to analyze environmental light safety."
+  }
+}

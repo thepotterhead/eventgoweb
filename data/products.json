@@ -1,0 +1,30 @@
+{
+  "petalo": {
+    "product_id": "petalo",
+    "name": "Petalo Discovery Kit",
+    "character_id": "petalo",
+    "description": "A light-up discovery friend used with challenge cards and connected subworlds.",
+    "stem_topics": ["light in everyday environments", "cause and effect", "observation", "safety awareness", "communication"]
+  },
+  "quacky": {
+    "product_id": "quacky",
+    "name": "Quacky Duck Bot",
+    "character_id": "quacky",
+    "description": "A movable duck bot powered by a BO motor through a simple circuit.",
+    "stem_topics": ["motors", "batteries", "simple circuits", "electrical energy to mechanical motion", "cause and effect"]
+  },
+  "tolly": {
+    "product_id": "tolly",
+    "name": "Tolly Traffic Light Sequencer",
+    "character_id": "tolly",
+    "description": "A character using a timer circuit and red-yellow-green LED sequence.",
+    "stem_topics": ["timer circuits", "LEDs", "electronic sequencing", "circuit connections", "real-world electronics"]
+  },
+  "tiko": {
+    "product_id": "tiko",
+    "name": "Tiko Scorpio Bot",
+    "character_id": "tiko",
+    "description": "A scorpio bot whose motor creates up-and-down thread-based tail movement.",
+    "stem_topics": ["motors", "simple circuits", "mechanical motion", "energy-to-motion relationship", "troubleshooting"]
+  }
+}

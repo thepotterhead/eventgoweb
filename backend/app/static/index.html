@@ -275,6 +275,14 @@
       <span style="font-size:0.82rem; color:#64748b; font-weight:500;">STEM Studio</span>
     </div>
 
+    <!-- View Navigation Tabs -->
+    <div style="display:flex; gap:0.35rem; background:#f1f5f9; padding:0.25rem; border-radius:8px; border:1px solid #e2e8f0;">
+      <button class="btn btn-secondary btn-pill nav-tab" id="tab-btn-home" style="font-weight:700; background:#ffffff; color:#2563eb;" onclick="switchViewTab('home')">🏠 Home</button>
+      <button class="btn btn-secondary btn-pill nav-tab" id="tab-btn-studio" style="font-weight:600;" onclick="switchViewTab('studio')">💬 Studio Chat</button>
+      <button class="btn btn-secondary btn-pill nav-tab" id="tab-btn-origami" style="font-weight:600;" onclick="switchViewTab('origami')">🧩 Origami Lab</button>
+      <button class="btn btn-secondary btn-pill nav-tab" id="tab-btn-analytics" style="font-weight:600;" onclick="switchViewTab('analytics')">📊 Analytics</button>
+    </div>
+
     <div class="nav-controls">
       <button class="btn btn-secondary btn-pill" style="font-weight:700; border-color:#2563eb; color:#2563eb; background:#eff6ff;" onclick="openLoginModal()">
         🔑 Learner Login
@@ -299,8 +307,249 @@
   </header>
 
   <div class="app-container">
+
+    <!-- 🏠 1. HOME SCREEN DASHBOARD -->
+    <div id="home-screen-panel" style="display:flex; flex-direction:column; gap:1.25rem;">
+      <div class="glass-panel" style="background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%); border:1px solid #bfdbfe; padding:2rem; position:relative; overflow:hidden;">
+        <div style="max-width:720px; z-index:2; position:relative;">
+          <span class="badge badge-purple" style="font-size:0.75rem; margin-bottom:0.75rem; background:#dbeafe; color:#1e40af;">🌟 Welcome to Funobotz STEM Studio</span>
+          <h1 style="font-size:2rem; font-weight:800; color:#0f172a; margin-bottom:0.6rem; line-height:1.2; letter-spacing:-0.5px;">
+            Build Paper Robots. Master Circuits.<br>
+            <span style="color:#2563eb;">Learn STEM with AI Companions.</span>
+          </h1>
+          <p style="font-size:0.95rem; color:#475569; margin-bottom:1.5rem; line-height:1.6;">
+            An interactive, grounded learning companion for kids aged 8–12+. Explore origami mechanical linkages, circuit physics, and hands-on paper robotics with bilingual AI speech in English & Hindi.
+          </p>
+
+          <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+            <button class="btn btn-primary" style="padding:0.75rem 1.4rem; font-size:0.9rem; background:#2563eb; border-radius:10px;" onclick="switchViewTab('studio')">
+              🚀 Enter STEM Studio Chat 💬
+            </button>
+            <button class="btn btn-secondary" style="padding:0.75rem 1.2rem; font-size:0.9rem; border-color:#2563eb; color:#2563eb; background:#ffffff; border-radius:10px;" onclick="openLoginModal()">
+              🔑 Learner Sign-In & Quiz
+            </button>
+            <button class="btn btn-secondary" style="padding:0.75rem 1.2rem; font-size:0.9rem; border-radius:10px;" onclick="switchViewTab('origami')">
+              🧩 Origami Folding Lab
+            </button>
+            <button class="btn btn-secondary" style="padding:0.75rem 1.2rem; font-size:0.9rem; border-radius:10px;" onclick="switchViewTab('analytics')">
+              📊 Mastery Analytics
+            </button>
+          </div>
+        </div>
+        
+        <div style="position:absolute; right:2rem; top:50%; transform:translateY(-50%); font-size:8rem; opacity:0.15; pointer-events:none;">
+          🤖
+        </div>
+      </div>
+
+      <div class="glass-panel">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+          <div>
+            <h3 style="font-size:1.1rem; color:#0f172a; font-weight:800;">🤖 Featured STEM Companions</h3>
+            <p style="font-size:0.8rem; color:#64748b;">Select any companion to launch personalized guided learning:</p>
+          </div>
+          <button class="btn btn-secondary btn-pill" onclick="switchViewTab('studio')">View All 12 Roster Members ➡️</button>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1rem; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer;" class="age-card" onclick="selectCharacter('petalo', true); switchViewTab('studio');">
+            <div>
+              <div style="font-size:2.2rem; margin-bottom:0.4rem;">💡</div>
+              <strong style="font-size:1rem; color:#0f172a; display:block;">Petalo</strong>
+              <span class="badge badge-amber" style="margin-top:0.2rem; font-size:0.7rem;">Light & Color Cards</span>
+              <p style="font-size:0.78rem; color:#64748b; margin-top:0.5rem;">Teaches LED refraction, optical discovery cards, and light circuit safety.</p>
+            </div>
+            <button class="btn btn-secondary btn-pill" style="margin-top:0.8rem; width:100%; font-size:0.75rem;">Chat with Petalo ➡️</button>
+          </div>
+
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1rem; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer;" class="age-card" onclick="selectCharacter('tiko', true); switchViewTab('studio');">
+            <div>
+              <div style="font-size:2.2rem; margin-bottom:0.4rem;">⚙️</div>
+              <strong style="font-size:1rem; color:#0f172a; display:block;">Tiko</strong>
+              <span class="badge badge-blue" style="margin-top:0.2rem; font-size:0.7rem;">Scorpio Motor Tail</span>
+              <p style="font-size:0.78rem; color:#64748b; margin-top:0.5rem;">Demonstrates motor thread rotation, up-and-down tail mechanical motion.</p>
+            </div>
+            <button class="btn btn-secondary btn-pill" style="margin-top:0.8rem; width:100%; font-size:0.75rem;">Chat with Tiko ➡️</button>
+          </div>
+
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1rem; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer;" class="age-card" onclick="selectCharacter('quacky', true); switchViewTab('studio');">
+            <div>
+              <div style="font-size:2.2rem; margin-bottom:0.4rem;">🦆</div>
+              <strong style="font-size:1rem; color:#0f172a; display:block;">Quacky</strong>
+              <span class="badge badge-emerald" style="margin-top:0.2rem; font-size:0.7rem;">Duck Mechanics & Stories</span>
+              <p style="font-size:0.78rem; color:#64748b; margin-top:0.5rem;">Teaches paper duck wing linkages and motor circuit assembly stories.</p>
+            </div>
+            <button class="btn btn-secondary btn-pill" style="margin-top:0.8rem; width:100%; font-size:0.75rem;">Chat with Quacky ➡️</button>
+          </div>
+
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1rem; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer;" class="age-card" onclick="selectCharacter('tolly', true); switchViewTab('studio');">
+            <div>
+              <div style="font-size:2.2rem; margin-bottom:0.4rem;">⚡</div>
+              <strong style="font-size:1rem; color:#0f172a; display:block;">Tolly</strong>
+              <span class="badge badge-purple" style="margin-top:0.2rem; font-size:0.7rem;">Electronic Circuits</span>
+              <p style="font-size:0.78rem; color:#64748b; margin-top:0.5rem;">Explains voltage, current loops, battery polarity, and resistance.</p>
+            </div>
+            <button class="btn btn-secondary btn-pill" style="margin-top:0.8rem; width:100%; font-size:0.75rem;">Chat with Tolly ➡️</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:1rem;">
+        <div class="glass-panel">
+          <div style="font-size:1.6rem; margin-bottom:0.3rem;">🗣️</div>
+          <strong style="font-size:0.92rem; color:#0f172a;">Bilingual Voice Mode (ENG / HIN)</strong>
+          <p style="font-size:0.78rem; color:#64748b; margin-top:0.3rem;">Listen to speech responses and speak directly using the microphone in Hindi or English.</p>
+        </div>
+        <div class="glass-panel">
+          <div style="font-size:1.6rem; margin-bottom:0.3rem;">🧩</div>
+          <strong style="font-size:0.92rem; color:#0f172a;">Interactive Origami Crease Simulator</strong>
+          <p style="font-size:0.78rem; color:#64748b; margin-top:0.3rem;">Fold paper components live, calculate paper rigidity GSM, and complete origami challenges.</p>
+        </div>
+        <div class="glass-panel">
+          <div style="font-size:1.6rem; margin-bottom:0.3rem;">📊</div>
+          <strong style="font-size:0.92rem; color:#0f172a;">STEM Mastery Radar & Analytics</strong>
+          <p style="font-size:0.78rem; color:#64748b; margin-top:0.3rem;">Track mechanics, circuits, and problem-solving proficiency with printable progress reports.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🧩 2. FEATURE 1: ORIGAMI CREASE SIMULATOR -->
+    <div id="origami-lab-panel" class="glass-panel" style="display:none; flex-direction:column; gap:1rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+        <div>
+          <h3 style="font-size:1.1rem; color:#0f172a; font-weight:800; display:flex; align-items:center; gap:0.4rem;">
+            🧩 Crease Master: Interactive Paper Folding Canvas
+          </h3>
+          <p style="font-size:0.8rem; color:#64748b;">Simulate 3D crease folds, test paper GSM rigidity, and complete paper robot joints.</p>
+        </div>
+        <div style="display:flex; gap:0.5rem;">
+          <span class="badge badge-emerald" id="origami-xp-badge">Challenge: Unlocked (+25 XP)</span>
+          <button class="btn btn-secondary btn-pill" onclick="switchViewTab('studio')">Back to Studio 💬</button>
+        </div>
+      </div>
+
+      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.25rem; text-align:center;">
+        <svg width="100%" height="200" viewBox="0 0 500 200" id="origami-svg-canvas">
+          <!-- Rendered dynamically -->
+        </svg>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; background:#f8fafc; padding:1rem; border-radius:10px; border:1px solid #e2e8f0;">
+        <div>
+          <label style="font-size:0.8rem; font-weight:700; color:#0f172a; display:block; margin-bottom:0.3rem;">
+            Fold Crease Angle: <span id="origami-angle-text" style="color:#2563eb;">90°</span>
+          </label>
+          <input type="range" min="0" max="180" step="5" value="90" style="width:100%; accent-color:#2563eb;" oninput="updateOrigamiFoldAngle(this.value)" />
+        </div>
+
+        <div>
+          <label style="font-size:0.8rem; font-weight:700; color:#0f172a; display:block; margin-bottom:0.3rem;">
+            Paper Stock Thickness:
+          </label>
+          <select class="chat-input" style="width:100%; font-size:0.8rem;" onchange="updateOrigamiGSM(this.value)">
+            <option value="90">90 GSM (Thin Copy Paper)</option>
+            <option value="200" selected>200 GSM (Standard Cardstock)</option>
+            <option value="300">300 GSM (Heavy Construction Cardboard)</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="font-size:0.8rem; font-weight:700; color:#0f172a; display:block; margin-bottom:0.3rem;">
+            Fold Joint Stability:
+          </label>
+          <div id="origami-rigidity-status" style="background:#ecfdf5; color:#047857; border:1px solid #a7f3d0; padding:0.4rem 0.6rem; border-radius:6px; font-weight:700; text-align:center; font-size:0.8rem;">
+            Rigid 90° Crease (Optimal)
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <button class="btn btn-secondary" onclick="resetOrigamiCanvas()">🔄 Reset Fold Angle</button>
+        <button class="btn btn-primary" style="background:#2563eb;" onclick="completeOrigamiChallenge()">🎉 Complete Origami Challenge (+25 XP)</button>
+      </div>
+    </div>
+
+    <!-- 📊 3. FEATURE 2: STEM MASTERY ANALYTICS DASHBOARD -->
+    <div id="analytics-panel" class="glass-panel" style="display:none; flex-direction:column; gap:1.25rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+        <div>
+          <h3 style="font-size:1.1rem; color:#0f172a; font-weight:800; display:flex; align-items:center; gap:0.4rem;">
+            📊 STEM Mastery Radar & Learner Progress Analytics
+          </h3>
+          <p style="font-size:0.8rem; color:#64748b;">Comprehensive skill evaluation and diagnostic assessment telemetry.</p>
+        </div>
+        <div style="display:flex; gap:0.5rem;">
+          <button class="btn btn-primary btn-pill" onclick="window.print()">🖨️ Print Analytics Report</button>
+          <button class="btn btn-secondary btn-pill" onclick="switchViewTab('studio')">Back to Studio 💬</button>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:1.25rem; display:flex; flex-direction:column; gap:1rem;">
+          <h4 style="font-size:0.95rem; font-weight:700; color:#0f172a;">🎯 Core STEM Competencies</h4>
+          
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.82rem; font-weight:600; margin-bottom:0.3rem;">
+              <span>⚙️ Mechanical Motion & Linkages</span>
+              <span style="color:#2563eb;" id="score-mechanics">85%</span>
+            </div>
+            <div style="background:#e2e8f0; border-radius:9999px; height:8px; overflow:hidden;">
+              <div style="background:#2563eb; height:100%; width:85%;" id="bar-mechanics"></div>
+            </div>
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.82rem; font-weight:600; margin-bottom:0.3rem;">
+              <span>⚡ Circuit Physics & Current Loops</span>
+              <span style="color:#10b981;" id="score-circuits">78%</span>
+            </div>
+            <div style="background:#e2e8f0; border-radius:9999px; height:8px; overflow:hidden;">
+              <div style="background:#10b981; height:100%; width:78%;" id="bar-circuits"></div>
+            </div>
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.82rem; font-weight:600; margin-bottom:0.3rem;">
+              <span>🧠 Problem Solving & Inquiry</span>
+              <span style="color:#f59e0b;" id="score-logic">92%</span>
+            </div>
+            <div style="background:#e2e8f0; border-radius:9999px; height:8px; overflow:hidden;">
+              <div style="background:#f59e0b; height:100%; width:92%;" id="bar-logic"></div>
+            </div>
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.82rem; font-weight:600; margin-bottom:0.3rem;">
+              <span>📐 Origami Precision & Assembly</span>
+              <span style="color:#8b5cf6;" id="score-origami">80%</span>
+            </div>
+            <div style="background:#e2e8f0; border-radius:9999px; height:8px; overflow:hidden;">
+              <div style="background:#8b5cf6; height:100%; width:80%;" id="bar-origami"></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:1.25rem; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <h4 style="font-size:0.95rem; font-weight:700; color:#0f172a; margin-bottom:0.75rem;">🏆 Active Learner Profile Summary</h4>
+            <div style="font-size:0.85rem; display:flex; flex-direction:column; gap:0.5rem;">
+              <div><strong>Learner:</strong> <span id="analytics-name">Spark Learner</span></div>
+              <div><strong>Age & Level:</strong> <span id="analytics-age">Age 8 (Beginner Level 0)</span></div>
+              <div><strong>Total Earned XP:</strong> <span id="analytics-xp" style="color:#2563eb; font-weight:800;">0 XP</span></div>
+              <div><strong>Active Companion:</strong> <span id="analytics-char" style="color:#b45309; font-weight:700;">Petalo 💡</span></div>
+            </div>
+          </div>
+
+          <div style="background:#ffffff; border:1px solid #e2e8f0; padding:0.75rem; border-radius:8px; margin-top:1rem; text-align:center;">
+            <span style="font-size:0.75rem; color:#64748b;">Current Master Rank:</span>
+            <h3 style="color:#047857; font-size:1.1rem; font-weight:800; margin-top:0.2rem;" id="analytics-rank">Paper Crafter 🌱</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Interactive Learning Scenarios Banner -->
-    <div class="demo-banner">
+    <div class="demo-banner" id="scenario-banner" style="display:none;">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
         <div>
           <h3 style="color:#0f172a; font-size:1rem; display:flex; align-items:center; gap:0.4rem; font-weight:700;">
@@ -769,6 +1018,180 @@
       renderSTEMQuests();
     }
 
+    // --- VIEW TAB SWITCHER ---
+    let currentActiveTab = 'home'; // 'home', 'studio', 'origami', 'analytics'
+
+    function switchViewTab(tabName) {
+      playClickSFX();
+      currentActiveTab = tabName;
+
+      const homePanel = document.getElementById('home-screen-panel');
+      const mainGrid = document.getElementById('app-main-grid');
+      const origamiPanel = document.getElementById('origami-lab-panel');
+      const analyticsPanel = document.getElementById('analytics-panel');
+      const scenarioBanner = document.getElementById('scenario-banner');
+
+      // Update tab styles
+      ['home', 'studio', 'origami', 'analytics'].forEach(t => {
+        const btn = document.getElementById(`tab-btn-${t}`);
+        if (btn) {
+          if (t === tabName) {
+            btn.style.background = '#ffffff';
+            btn.style.color = '#2563eb';
+            btn.style.fontWeight = '700';
+          } else {
+            btn.style.background = 'transparent';
+            btn.style.color = '#475569';
+            btn.style.fontWeight = '600';
+          }
+        }
+      });
+
+      if (homePanel) homePanel.style.display = (tabName === 'home') ? 'flex' : 'none';
+      if (mainGrid) mainGrid.style.display = (tabName === 'studio') ? 'grid' : 'none';
+      if (origamiPanel) origamiPanel.style.display = (tabName === 'origami') ? 'flex' : 'none';
+      if (analyticsPanel) analyticsPanel.style.display = (tabName === 'analytics') ? 'flex' : 'none';
+      if (scenarioBanner) scenarioBanner.style.display = (tabName === 'studio') ? 'block' : 'none';
+
+      if (tabName === 'origami') renderOrigamiCanvas();
+      if (tabName === 'analytics') updateAnalyticsDashboard();
+    }
+
+    // --- FEATURE 1: ORIGAMI FOLDING SIMULATOR CANVAS ---
+    let origamiFoldAngle = 90;
+    let origamiPaperGSM = 200;
+    let origamiChallengeDone = false;
+
+    function renderOrigamiCanvas() {
+      const svg = document.getElementById('origami-svg-canvas');
+      if (!svg) return;
+
+      const angleRad = (origamiFoldAngle * Math.PI) / 180;
+      const foldLen = 80;
+      const p1X = 170;
+      const p1Y = 130;
+      const p2X = Math.round(p1X + Math.cos(angleRad) * foldLen);
+      const p2Y = Math.round(p1Y - Math.sin(angleRad) * foldLen);
+
+      const strokeColor = origamiPaperGSM > 220 ? '#b45309' : origamiPaperGSM < 120 ? '#dc2626' : '#2563eb';
+      const flexStatus = document.getElementById('origami-rigidity-status');
+      
+      let statusText = 'Rigid 90° Crease (Optimal)';
+      let statusBg = '#ecfdf5';
+      let statusColor = '#047857';
+
+      if (origamiFoldAngle < 45) {
+        statusText = 'Shallow Fold (Weak Joint)';
+        statusBg = '#fff1f2';
+        statusColor = '#be123c';
+      } else if (origamiFoldAngle > 135) {
+        statusText = 'Over-Folded Crease (Tear Risk)';
+        statusBg = '#fffbeb';
+        statusColor = '#b45309';
+      }
+
+      if (flexStatus) {
+        flexStatus.innerText = statusText;
+        flexStatus.style.background = statusBg;
+        flexStatus.style.color = statusColor;
+        flexStatus.style.borderColor = statusColor;
+      }
+
+      const angleText = document.getElementById('origami-angle-text');
+      if (angleText) angleText.innerText = `${origamiFoldAngle}°`;
+
+      svg.innerHTML = `
+        <rect x="50" y="130" width="120" height="25" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2" rx="3"/>
+        <text x="110" y="146" font-size="10" font-weight="bold" fill="#475569" text-anchor="middle">Base Paper Anchor</text>
+        <circle cx="${p1X}" cy="${p1Y}" r="7" fill="#f59e0b" stroke="#b45309" stroke-width="2"/>
+        <line x1="${p1X}" y1="${p1Y}" x2="${p2X}" y2="${p2Y}" stroke="${strokeColor}" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="${p2X}" cy="${p2Y}" r="4" fill="#0f172a"/>
+        <polygon points="${p1X},${p1Y} ${p2X},${p2Y} ${p2X+30},${p2Y-15} ${p1X+30},${p1Y-15}" fill="rgba(37,99,235,0.15)" stroke="${strokeColor}" stroke-width="1.5" stroke-dasharray="3"/>
+        <line x1="170" y1="50" x2="170" y2="170" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4"/>
+        <text x="170" y="40" font-size="11" font-weight="bold" fill="#dc2626" text-anchor="middle">✂️ Dotted Crease Axis</text>
+        <text x="260" y="90" font-size="13" font-weight="bold" fill="#0f172a">
+          Crease Angle: ${origamiFoldAngle}° (${origamiPaperGSM} GSM)
+        </text>
+        <text x="260" y="110" font-size="11" fill="#64748b">
+          Rigidity Index: ${(origamiPaperGSM * (origamiFoldAngle / 90)).toFixed(0)} N/m²
+        </text>
+      `;
+    }
+
+    function updateOrigamiFoldAngle(val) {
+      origamiFoldAngle = parseInt(val);
+      playServoSFX(origamiFoldAngle);
+      renderOrigamiCanvas();
+    }
+
+    function updateOrigamiGSM(val) {
+      origamiPaperGSM = parseInt(val);
+      playClickSFX();
+      renderOrigamiCanvas();
+    }
+
+    function resetOrigamiCanvas() {
+      origamiFoldAngle = 90;
+      origamiPaperGSM = 200;
+      playClickSFX();
+      renderOrigamiCanvas();
+    }
+
+    function completeOrigamiChallenge() {
+      if (origamiChallengeDone) {
+        alert("You already completed the Crease Master Origami Challenge!");
+        return;
+      }
+      origamiChallengeDone = true;
+      currentScore += 25;
+      document.getElementById('xp-badge').innerText = `Score: ${currentScore} XP`;
+      const badge = document.getElementById('origami-xp-badge');
+      if (badge) {
+        badge.innerText = "✓ Challenge Completed (+25 XP)";
+        badge.className = "badge badge-emerald";
+      }
+      triggerConfetti();
+      updateAnalyticsDashboard();
+    }
+
+    // --- FEATURE 2: STEM MASTERY ANALYTICS DASHBOARD ---
+    function updateAnalyticsDashboard() {
+      const nameElem = document.getElementById('analytics-name');
+      const ageElem = document.getElementById('analytics-age');
+      const xpElem = document.getElementById('analytics-xp');
+      const charElem = document.getElementById('analytics-char');
+      const rankElem = document.getElementById('analytics-rank');
+
+      if (nameElem) nameElem.innerText = currentProfile.name || 'Spark Learner';
+      if (ageElem) ageElem.innerText = `Age ${currentProfile.age} (${currentProfile.starting_knowledge || 'Beginner'} Level ${currentProfile.current_level || 0})`;
+      if (xpElem) xpElem.innerText = `${currentScore} XP`;
+
+      const char = allCharacters.find(c => c.id === currentProfile.active_character);
+      if (charElem) charElem.innerText = `${char ? char.name : 'Funobotz Companion'} ${char ? char.avatar : '🤖'}`;
+
+      let rank = 'Paper Crafter 🌱';
+      if (currentScore >= 75) rank = 'STEM Master 🌟';
+      else if (currentScore >= 35) rank = 'Linkage Apprentice ⚙️';
+      if (rankElem) rankElem.innerText = rank;
+
+      const mechanicsScore = Math.min(100, 50 + currentScore * 0.8);
+      const circuitsScore = Math.min(100, 40 + currentScore * 0.7);
+      const logicScore = Math.min(100, 60 + currentScore * 0.9);
+      const origamiScore = origamiChallengeDone ? 95 : 65;
+
+      const sm = document.getElementById('score-mechanics'); if (sm) sm.innerText = `${Math.round(mechanicsScore)}%`;
+      const bm = document.getElementById('bar-mechanics'); if (bm) bm.style.width = `${Math.round(mechanicsScore)}%`;
+
+      const sc = document.getElementById('score-circuits'); if (sc) sc.innerText = `${Math.round(circuitsScore)}%`;
+      const bc = document.getElementById('bar-circuits'); if (bc) bc.style.width = `${Math.round(circuitsScore)}%`;
+
+      const sl = document.getElementById('score-logic'); if (sl) sl.innerText = `${Math.round(logicScore)}%`;
+      const bl = document.getElementById('bar-logic'); if (bl) bl.style.width = `${Math.round(logicScore)}%`;
+
+      const so = document.getElementById('score-origami'); if (so) so.innerText = `${Math.round(origamiScore)}%`;
+      const bo = document.getElementById('bar-origami'); if (bo) bo.style.width = `${Math.round(origamiScore)}%`;
+    }
+
     async function initApp() {
       // Fetch characters
       const cRes = await fetch(`${API_BASE}/characters`);
@@ -778,6 +1201,7 @@
       renderCircuitVisualizer('petalo');
       renderServoLinkageLab();
       renderSTEMQuests();
+      switchViewTab('home');
 
       // Init session
       await fetch(`${API_BASE}/session`, {
